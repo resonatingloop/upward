@@ -1,6 +1,10 @@
 import { type FormEvent, useMemo, useState } from 'react'
 
-import { HeldFormCabinet, type HeldFormEntry } from './cabinet/held-form-cabinet'
+import {
+  chooseCabinetFront,
+  type HeldFormEntry,
+} from './cabinet/cabinet-view'
+import { HeldFormCabinet } from './cabinet/held-form-cabinet'
 import { assertNaturalDimension, parsePositiveInteger } from './domain/input'
 import {
   buildDivisorLattice,
@@ -26,6 +30,19 @@ function signatureText(lattice: DivisorLattice): string {
   return lattice.signature.length === 0 ? '(point)' : `(${lattice.signature.join(', ')})`
 }
 
+function heldEntriesFor(
+  current: DivisorLattice,
+  heldValues: readonly number[],
+): readonly HeldFormEntry[] {
+  return heldValues.map((value) => {
+    const lattice = buildDivisorLattice(value)
+    return {
+      lattice,
+      relation: compareLattices(current, lattice),
+    }
+  })
+}
+
 function browserSessionStorage(): SessionStorageLike | null {
   try {
     return window.sessionStorage
@@ -48,18 +65,16 @@ export function App() {
 
   const layout = useMemo(() => layoutNatural3d(lattice), [lattice])
   const heldEntries = useMemo<readonly HeldFormEntry[]>(
-    () =>
-      heldValues.map((value) => {
-        const heldLattice = buildDivisorLattice(value)
-        return {
-          lattice: heldLattice,
-          relation: compareLattices(lattice, heldLattice),
-        }
-      }),
+    () => heldEntriesFor(lattice, heldValues),
     [heldValues, lattice],
   )
+  const frontHeldValue = chooseCabinetFront(
+    heldEntries,
+    inspectedHeldValue,
+    inspectedHeldValue === null,
+  )
   const inspectedEntry =
-    heldEntries.find((entry) => entry.lattice.n === inspectedHeldValue) ?? null
+    heldEntries.find((entry) => entry.lattice.n === frontHeldValue) ?? null
   const embeddedNodeIds = useMemo(
     () => new Set(inspectedEntry?.relation.embeddedNodeIds ?? []),
     [inspectedEntry],
@@ -81,6 +96,13 @@ export function App() {
       const nextLattice = buildDivisorLattice(value)
       assertNaturalDimension(nextLattice)
       setLattice(nextLattice)
+      setInspectedHeldValue((currentInspection) =>
+        chooseCabinetFront(
+          heldEntriesFor(nextLattice, heldValues),
+          currentInspection,
+          true,
+        ),
+      )
       setSelectedId(null)
       setError(null)
       setResetToken((token) => token + 1)
@@ -133,7 +155,7 @@ export function App() {
     const releasedIndex = heldValues.indexOf(value)
     const nextValues = releaseForm(heldValues, value)
 
-    if (inspectedHeldValue === value) {
+    if (frontHeldValue === value) {
       setInspectedHeldValue(
         nextValues[releasedIndex] ?? nextValues[releasedIndex - 1] ?? null,
       )
@@ -197,7 +219,7 @@ export function App() {
         <HeldFormCabinet
           current={lattice.n}
           entries={heldEntries}
-          inspectedValue={inspectedHeldValue}
+          inspectedValue={frontHeldValue}
           message={cabinetMessage}
           onHold={holdCurrentForm}
           onInspect={inspectHeldForm}
@@ -345,7 +367,7 @@ export function App() {
                   type="button"
                   key={node.id}
                   aria-pressed={selected}
-                  aria-label={`${node.value}${embedded ? `, contained in held form ${inspectedHeldValue}` : ''}`}
+                  aria-label={`${node.value}${embedded ? `, contained in held form ${frontHeldValue}` : ''}`}
                   className={`${embedded ? 'is-embedded' : ''}${selected ? ' is-selected' : ''}${complement ? ' is-complement' : ''}`}
                   onClick={() => setSelectedId(node.id)}
                 >

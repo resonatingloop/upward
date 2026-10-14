@@ -309,8 +309,7 @@ h1 {
   margin-top: 0.55rem;
 }
 
-.cabinet-command p,
-.cabinet-message {
+.cabinet-command p {
   margin: 0;
   color: #596461;
   font-size: 0.56rem;
@@ -346,37 +345,54 @@ h1 {
   font-size: 0.8rem;
 }
 
-.cabinet-message {
-  min-height: 1.5em;
-  margin-top: 0.4rem;
-  color: #76847f;
-  font-family: var(--serif);
-  font-size: 0.68rem;
-  font-style: italic;
+.cabinet-aperture-heading {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.75rem;
 }
 
-.cabinet-list {
-  display: flex;
-  gap: 0.45rem;
-  margin: 0.65rem 0 0;
-  padding: 0 0 0.35rem;
-  overflow-x: auto;
-  list-style: none;
-  scroll-snap-type: x proximity;
-  scrollbar-color: #3b4844 transparent;
-  scrollbar-width: thin;
+.cabinet-aperture-heading > span {
+  color: #73817c;
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.cabinet-aperture-heading > button,
+.cabinet-drawer-close {
+  padding: 0.25rem 0;
+  color: #82908b;
+  border: 0;
+  border-bottom: 1px solid #3a4643;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 180ms var(--ease), border-color 180ms var(--ease);
+}
+
+.cabinet-aperture-heading > button:hover,
+.cabinet-drawer-close:hover {
+  color: var(--verdigris);
+  border-color: rgba(120, 223, 202, 0.62);
+}
+
+.cabinet-front {
+  margin-top: 0.45rem;
 }
 
 .cabinet-specimen {
   --relation-color: #54615d;
   position: relative;
-  flex: 0 0 9.2rem;
+  width: 100%;
   overflow: hidden;
   border: 1px solid #2a3332;
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--relation-color) 8%, transparent), transparent 58%),
     rgba(8, 12, 13, 0.78);
-  scroll-snap-align: start;
   transition:
     border-color 220ms var(--ease),
     box-shadow 220ms var(--ease),
@@ -407,25 +423,35 @@ h1 {
     0 0 1.1rem color-mix(in srgb, var(--relation-color) 13%, transparent);
 }
 
-.cabinet-specimen.relation-identity {
+.cabinet-specimen.relation-identity,
+.cabinet-index-rail button.relation-identity {
   --relation-color: var(--verdigris);
 }
 
-.cabinet-specimen.relation-structural-twin {
+.cabinet-specimen.relation-structural-twin,
+.cabinet-index-rail button.relation-structural-twin {
   --relation-color: var(--violet);
+}
+
+.cabinet-specimen.relation-structural-twin {
   box-shadow:
     inset 0 0 1.5rem rgba(169, 149, 217, 0.08),
     0 0 1.2rem rgba(169, 149, 217, 0.2);
 }
 
-.cabinet-specimen.relation-prime-extrusion {
+.cabinet-specimen.relation-prime-extrusion,
+.cabinet-index-rail button.relation-prime-extrusion {
   --relation-color: #e7c487;
+}
+
+.cabinet-specimen.relation-prime-extrusion {
   box-shadow:
     inset 0 0 1.4rem rgba(231, 196, 135, 0.075),
     0 0 1rem rgba(220, 161, 108, 0.12);
 }
 
-.cabinet-specimen.relation-divisor-embedding {
+.cabinet-specimen.relation-divisor-embedding,
+.cabinet-index-rail button.relation-divisor-embedding {
   --relation-color: var(--copper);
 }
 
@@ -443,7 +469,7 @@ h1 {
   text-align: left;
 }
 
-.cabinet-index {
+.cabinet-card-index {
   position: absolute;
   top: 0.42rem;
   right: 0.5rem;
@@ -517,6 +543,192 @@ h1 {
   color: #596461;
   border-left: 1px solid #252e2d;
   font-size: 0.75rem;
+}
+
+.cabinet-index-rail {
+  min-width: 0;
+  margin-top: 0.5rem;
+}
+
+.cabinet-index-rail ol {
+  display: flex;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0 0 0.25rem;
+  overflow-x: auto;
+  list-style: none;
+  scrollbar-color: #3b4844 transparent;
+  scrollbar-width: thin;
+}
+
+.cabinet-index-rail li {
+  flex: 0 0 auto;
+}
+
+.cabinet-index-rail button {
+  --relation-color: #54615d;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 0.3rem;
+  align-items: baseline;
+  min-height: 1.8rem;
+  padding: 0.3rem 0.42rem;
+  color: #68736f;
+  border: 1px solid #283130;
+  background: rgba(8, 12, 13, 0.58);
+  cursor: pointer;
+  transition:
+    color 180ms var(--ease),
+    border-color 180ms var(--ease),
+    background 180ms var(--ease),
+    box-shadow 180ms var(--ease);
+}
+
+.cabinet-index-rail button > span {
+  color: #46514e;
+  font-size: 0.43rem;
+  letter-spacing: 0.08em;
+}
+
+.cabinet-index-rail button strong {
+  color: inherit;
+  font-family: var(--serif);
+  font-size: 0.75rem;
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.cabinet-index-rail button i {
+  color: #46514e;
+  font-size: 0.58rem;
+  font-style: normal;
+}
+
+.cabinet-index-rail button.is-answering i {
+  color: var(--relation-color);
+}
+
+.cabinet-index-rail button:hover,
+.cabinet-index-rail button[aria-pressed="true"] {
+  color: var(--bone-bright);
+  border-color: color-mix(in srgb, var(--relation-color) 68%, #394340);
+  background: color-mix(in srgb, var(--relation-color) 8%, rgba(8, 12, 13, 0.8));
+}
+
+.cabinet-index-rail button.is-answering {
+  box-shadow: inset 0 -1px color-mix(in srgb, var(--relation-color) 70%, transparent);
+}
+
+.cabinet-drawer {
+  position: fixed;
+  inset: 0 auto 0 22rem;
+  width: min(46rem, calc(100vw - 22rem));
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  color: var(--bone);
+  border: 0;
+  border-left: 1px solid rgba(120, 223, 202, 0.28);
+  background: transparent;
+  box-shadow: 2rem 0 7rem rgba(0, 0, 0, 0.64);
+}
+
+.cabinet-drawer[open] {
+  animation: cabinet-drawer-in 280ms var(--ease) both;
+}
+
+.cabinet-drawer::backdrop {
+  background:
+    linear-gradient(90deg, rgba(2, 5, 5, 0.12) 0 22rem, rgba(2, 5, 5, 0.58) 22rem),
+    rgba(2, 5, 5, 0.16);
+  backdrop-filter: blur(2px);
+}
+
+.cabinet-drawer-surface {
+  height: 100%;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  overflow-y: auto;
+  background:
+    linear-gradient(rgba(109, 133, 126, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(109, 133, 126, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 14% 14%, rgba(120, 223, 202, 0.08), transparent 30%),
+    rgba(8, 12, 13, 0.98);
+  background-size: 4rem 4rem, 4rem 4rem, auto, auto;
+}
+
+.cabinet-drawer-surface > header {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  gap: 2rem;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding: 0 0 1rem;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(rgba(8, 12, 13, 0.98) 74%, transparent);
+}
+
+.cabinet-drawer-surface > header p {
+  margin: 0 0 0.35rem;
+  color: #63706c;
+  font-size: 0.52rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.cabinet-drawer-surface > header h3 {
+  margin: 0;
+  color: var(--bone-bright);
+  font-family: var(--serif);
+  font-size: clamp(1.5rem, 3vw, 2.4rem);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+}
+
+.cabinet-drawer-close {
+  min-height: 2.75rem;
+}
+
+.cabinet-drawer-close span {
+  margin-left: 0.35rem;
+  font-size: 0.85rem;
+}
+
+.cabinet-drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+  gap: 0.75rem;
+  align-items: start;
+}
+
+@keyframes cabinet-drawer-in {
+  from {
+    opacity: 0;
+    transform: translateX(-1.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cabinet-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .structure-card,
@@ -1031,6 +1243,22 @@ h1 {
   .spine-footer {
     margin-top: 0;
   }
+
+  .cabinet-drawer {
+    inset: auto 0 0;
+    width: 100vw;
+    height: min(82dvh, 48rem);
+    border-top: 1px solid rgba(120, 223, 202, 0.34);
+    border-left: 0;
+  }
+
+  .cabinet-drawer[open] {
+    animation-name: cabinet-sheet-in;
+  }
+
+  .cabinet-drawer::backdrop {
+    background: rgba(2, 5, 5, 0.66);
+  }
 }
 
 @media (max-width: 600px) {
@@ -1083,8 +1311,19 @@ h1 {
   }
 
   .cabinet-command button,
-  .cabinet-actions button {
+  .cabinet-actions button,
+  .cabinet-aperture-heading > button,
+  .cabinet-index-rail button {
     min-height: 2.75rem;
+  }
+
+  .cabinet-drawer-surface {
+    padding: 1.2rem;
+  }
+
+  .cabinet-drawer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
   }
 }
 
@@ -1096,5 +1335,9 @@ h1 {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .cabinet-drawer[open] {
+    animation: none;
   }
 }

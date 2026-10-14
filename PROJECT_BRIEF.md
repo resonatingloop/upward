@@ -48,7 +48,10 @@ explicit, mathematically neutral export boundary.
 the current artifact proves two complete circuits: unfold and inspect one bounded
 positive integer in exact natural exponent geometry; then hold several integers
 within a tab session and expose structural kinship or exact divisor-lattice
-containment against the active form.
+containment against the active form. the cabinet separates collection from
+reading: stable-order held forms remain indexed while one answering form comes
+forward, and the complete full-card collection opens as an extension of the
+instrument.
 
 ## success
 

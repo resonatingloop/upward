@@ -18,6 +18,8 @@ distinct primes, renders their exact natural exponent geometry, and exposes each
 selected divisor's factorization, coordinate, rank, and complement. a
 session-scoped cabinet can hold up to 12 integers, recognize structural twins,
 and illuminate a held divisor lattice when it is embedded in the active form.
+the cabinet keeps its insertion order in a compact index, brings an answering
+form to one full-size front card, and opens every full card in a pullout drawer.
 
 see [`STATUS.md`](STATUS.md) for the verified checkpoint and remaining gaps.
 
@@ -52,6 +54,11 @@ the cabinet identifies a new-prime extrusion by `2`: the six nodes and seven
 internal covers of `153` become one illuminated face of the complete 12-node,
 20-cover lattice of `306`.
 
+the resting cabinet shows one full-size front card. its index remains in stable
+held order even when another form comes forward to answer the active integer.
+choose **open cabinet** to extend the complete full-card drawer over the field;
+on narrow screens the extension rises from the bottom.
+
 ## publication
 
 the public artifact is available at
@@ -65,7 +72,8 @@ verified observation.
 
 ## configuration and data
 
-- configuration: none at runtime; build behavior lives in `vite.config.ts`.
+- configuration: none at runtime; build behavior lives in `vite.config.ts`,
+  which explicitly disables environment-file loading.
 - secrets: none required. `.env` files are ignored and must not be committed.
 - persistent data: at most 12 validated integers in versioned browser
   `sessionStorage`; no derived mathematics, annotations, or durable profile.
@@ -86,6 +94,7 @@ verified observation.
 | `DECISIONS.md` | historical | append-only | accepted rationale and supersession |
 | `specs/001-first-slice.md` | planning | retired | the completed first transition and its original boundary |
 | `specs/002-held-forms-cabinet.md` | planning | retired | completed session cabinet and relational comparison transition |
+| `specs/003-cabinet-front-and-drawer.md` | planning | retired | completed front-card and pullout-drawer transition |
 
 ## known limitations
 

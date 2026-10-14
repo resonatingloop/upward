@@ -78,17 +78,24 @@ rendered acceptance:
 2. drag, zoom, and reset the scene;
 3. choose `4` and confirm the complement reverses to `87`;
 4. unfold `60`; confirm signature `(2, 1, 1)`, 12 nodes, and 20 covers;
-5. unfold `153`, hold it, then unfold `306`; inspect the held form and confirm
+5. hold `348`, `174`, and `306` in that order, then unfold `153`; confirm the
+   full `306` card comes forward while the compact index remains `01 348`,
+   `02 174`, `03 306`;
+6. open the cabinet; confirm all three full cards appear, escape closes it, and
+   focus returns to **open cabinet**;
+7. hold `153`, then unfold `306`; confirm the held `153` card reports
    `face · ×2`, six emphasized divisor values, seven internal covers, 12 total
    nodes, and 20 total covers;
-6. select `153` and confirm complement `2`;
-7. reload the same tab and confirm held `153` returns from the integer-only
+8. select `153` and confirm complement `2`;
+9. reload the same tab and confirm held integers return from the integer-only
    session payload;
-8. hold `306`, unfold `348`, and confirm the held `306` card reports
+10. inspect held `306`, unfold `348`, and confirm its front card reports
    `same body` with structural signature `(2, 1, 1)`;
-9. try `210`; confirm a four-direction error while `348` remains visible;
-10. repeat near 430 pixels wide and confirm no horizontal overflow;
-11. disable webgl and confirm the scene failure is named while the relationship
+11. try `210`; confirm a four-direction error while `348` remains visible;
+12. repeat near 430 pixels wide; confirm no horizontal overflow and that the
+    cabinet opens as a two-column bottom sheet;
+13. emulate reduced motion and confirm the drawer opens without travel;
+14. disable webgl and confirm the scene failure is named while the relationship
     readout and emphasized divisor-rail values remain present.
 
 ## configuration and precedence
@@ -96,11 +103,12 @@ rendered acceptance:
 | source | location | owns | precedence |
 |---|---|---|---|
 | source constants | `src/domain/input.ts`, `src/domain/lattice.ts` | computation limits | only runtime limits |
-| vite build | `vite.config.ts` | asset base, react transform, test environment | build time |
+| vite build | `vite.config.ts` | asset base, disabled environment-file loading, react transform, test environment | build time |
 | pages workflow | `.github/workflows/deploy.yml` | validation, artifact scope, publication trigger | delivery time |
 
-the application has no runtime environment configuration. never add or inspect a
-real `.env` merely to run the first slice.
+the application has no runtime environment configuration. vite environment-file
+loading is disabled. never add or inspect a real `.env` merely to run the
+application.
 
 ## github pages publication
 

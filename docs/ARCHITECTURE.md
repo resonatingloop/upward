@@ -25,7 +25,9 @@ held integer session payload
   -> versioned validation
   -> reconstructed held lattices
   -> pure current/held relationship model
-       -> cabinet relation readout
+       -> stable-order cabinet index
+       -> derived front-card selection
+       -> full-card pullout drawer
        -> embedded node and edge ids
        -> scene and divisor-rail emphasis
 ```
@@ -40,7 +42,8 @@ held integer session payload
 | natural layout | `src/domain/layout.ts` | centered equal-step coordinates and camera extent | `layoutNatural3d` |
 | session adapter | `src/session/held-forms.ts` | schema validation, cap, deduplication, storage reads/writes, and failure isolation | `readHeldForms`, `writeHeldForms` |
 | application | `src/app.tsx` | current valid lattice, held integers, inspected relation, input failure, and selection | `App` |
-| cabinet | `src/cabinet/held-form-cabinet.tsx` | accessible hold, inspect, unfold, and release controls plus relationship copy | `HeldFormCabinet` |
+| cabinet view model | `src/cabinet/cabinet-view.ts` | answer-set discovery and deterministic front-card selection without changing held order | `chooseCabinetFront`, `answeringForms` |
+| cabinet | `src/cabinet/held-form-cabinet.tsx` | front card, compact index, accessible full-card drawer, and held-form actions | `HeldFormCabinet` |
 | scene | `src/scene/lattice-scene.tsx` | three.js projection, camera controls, node/edge rendering | `LatticeScene` |
 | scene failure boundary | `src/scene/scene-boundary.tsx` | preserve the dom instrument when webgl fails | `SceneBoundary` |
 | visual system | `src/styles.css` | responsive layout, tokens, focus, and scene framing | css classes |
@@ -58,9 +61,12 @@ held integer session payload
    input status, details, and keyboard selection.
 7. session restoration validates each held integer through the same input,
    divisor-count, and natural-dimension boundaries, then reconstructs its lattice.
-8. `compareLattices` compares each held lattice to the active lattice. only the
-   inspected relation supplies embedded ids to the scene and divisor rail.
-9. holding and releasing write the normalized integer list through the session
+8. `compareLattices` compares each held lattice to the active lattice. after a
+   successful unfold, the current answering inspection remains in front or the
+   first answer in stable insertion order comes forward. this derived view does
+   not reorder session state.
+9. only the front relation supplies embedded ids to the scene and divisor rail.
+10. holding and releasing write the normalized integer list through the session
    adapter. failed writes leave react's memory-only cabinet intact.
 
 ## persistence
@@ -71,7 +77,8 @@ unfoldable integers in insertion order. it normally survives same-tab reload and
 ends with the browsing session, subject to browser session restoration.
 
 factorization, lattice models, relationships, embedded ids, geometry, selected
-divisors, and interface state remain derived or in-memory only. malformed,
+divisors, front-card selection, drawer state, and other interface state remain
+derived or in-memory only. malformed,
 wrong-version, blocked, or write-failing storage produces an empty or
 memory-only cabinet without interrupting the active lattice.
 

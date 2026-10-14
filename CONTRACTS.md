@@ -17,7 +17,7 @@ not, by itself, authorization to weaken the contract.
 | relationships and embedded lattice facts | `src/domain/relations.ts` | `src/domain/relations.test.ts` |
 | natural three-dimensional position | `src/domain/layout.ts` | `src/domain/layout.test.ts` |
 | held-form session schema | `src/session/held-forms.ts` | `src/session/held-forms.test.ts` |
-| scene, cabinet, and visible details | `src/app.tsx`, `src/cabinet/held-form-cabinet.tsx`, `src/scene/lattice-scene.tsx` | production build and browser smoke |
+| scene, cabinet, and visible details | `src/app.tsx`, `src/cabinet/cabinet-view.ts`, `src/cabinet/held-form-cabinet.tsx`, `src/scene/lattice-scene.tsx` | focused cabinet tests, production build, and browser smoke |
 | supported input boundary | `src/domain/input.ts` | `src/domain/input.test.ts` |
 | static delivery intent | `.github/workflows/deploy.yml`, `vite.config.ts` | workflow review, production build, subpath smoke |
 
@@ -89,9 +89,10 @@ to browser session storage rather than a durable or cross-device identity.
 
 ## configuration
 
-there is no runtime configuration in the first slice. build behavior is owned by
-`vite.config.ts`; deployment intent is owned by `.github/workflows/deploy.yml`;
-computation limits are source constants with test coverage.
+there is no runtime configuration in the application. build behavior is owned
+by `vite.config.ts`, which disables environment-file loading; deployment intent
+is owned by `.github/workflows/deploy.yml`; computation limits are source
+constants with test coverage.
 
 ## required validation
 

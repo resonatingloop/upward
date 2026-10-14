@@ -3,6 +3,7 @@ import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
   base: '/upward/',
+  envDir: false,
   plugins: [react()],
   test: {
     environment: 'node',

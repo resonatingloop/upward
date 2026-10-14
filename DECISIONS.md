@@ -192,3 +192,49 @@ evidence:
 - `relation-001`, `relation-002`, `state-001`, and `boundary-002` in
   `CONTRACTS.md`; focused tests and rendered acceptance named by the related spec.
 
+## d-006 — the cabinet separates collection from reading
+
+- date: 2026-10-13
+- status: accepted
+- supersedes: none
+- related spec: `specs/003-cabinet-front-and-drawer.md`
+
+context:
+
+full-size held-form cards preserve the cabinet's specimen character, but a
+horizontal row inside the narrow control spine can hide the only form related to
+the active integer. making discovery depend on sideways scrolling weakens the
+cabinet as a relational instrument.
+
+decision:
+
+preserve held integers in a compact, stable-order index while presenting one
+full-size front card as the active reading. after a successful unfold, retain an
+inspected answering form or bring forward the first answer in stable insertion
+order. expose every full-size card through a native modal drawer that extends
+over the field on desktop and rises from the bottom on narrow screens.
+
+alternatives considered:
+
+- automatically scrolling the existing row, which reveals the answer but keeps
+  collection and reading entangled;
+- reordering held forms by relationship, which makes the persisted sequence
+  appear unstable and invents a hierarchy among relation kinds;
+- reducing every form to a permanent chip, which removes the cards' useful
+  mathematical and visual detail.
+
+consequences:
+
+- an answering form can become immediately visible without mutating session
+  order or schema;
+- the compact index remains an overview while the front card remains legible;
+- opening the cabinet temporarily occupies part of the sculpture field and must
+  retain explicit dismissal, focus return, and reduced-motion behavior;
+- starter specimens remain a separate invitation rather than becoming cabinet
+  contents.
+
+evidence:
+
+- focused front-selection tests and rendered desktop, narrow, keyboard,
+  reduced-motion, and no-webgl acceptance named by the related spec.
+
