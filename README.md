@@ -2,8 +2,10 @@
 
 upward is an interactive instrument for exploring the hidden structure of integers.
 It turns numbers into navigable divisor bodies: exact lattices when the structure fits natural exponent space, and ranked zonotopal projections when the form exceeds three prime directions.
+
 Or, less formally:
 upward is a zonotopal nightclub for projected hypercubes.
+
 With it, you can:
 - unfold a positive integer into its divisor lattice
 - compare integers by structural signature
