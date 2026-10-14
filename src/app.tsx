@@ -1,5 +1,6 @@
 import { type FormEvent, useMemo, useState } from 'react'
 
+import { HeldFormCabinet, type HeldFormEntry } from './cabinet/held-form-cabinet'
 import { assertNaturalDimension, parsePositiveInteger } from './domain/input'
 import {
   buildDivisorLattice,
@@ -7,8 +8,16 @@ import {
   type DivisorLattice,
 } from './domain/lattice'
 import { layoutNatural3d } from './domain/layout'
+import { compareLattices } from './domain/relations'
 import { AXIS_COLORS, LatticeScene } from './scene/lattice-scene'
 import { SceneBoundary } from './scene/scene-boundary'
+import {
+  holdForm,
+  readHeldForms,
+  releaseForm,
+  type SessionStorageLike,
+  writeHeldForms,
+} from './session/held-forms'
 
 const INITIAL_LATTICE = buildDivisorLattice(348)
 const SPECIMENS = [348, 60, 72, 64] as const
@@ -17,14 +26,48 @@ function signatureText(lattice: DivisorLattice): string {
   return lattice.signature.length === 0 ? '(point)' : `(${lattice.signature.join(', ')})`
 }
 
+function browserSessionStorage(): SessionStorageLike | null {
+  try {
+    return window.sessionStorage
+  } catch {
+    return null
+  }
+}
+
 export function App() {
   const [input, setInput] = useState('348')
   const [lattice, setLattice] = useState(INITIAL_LATTICE)
   const [selectedId, setSelectedId] = useState<string | null>('87')
   const [error, setError] = useState<string | null>(null)
   const [resetToken, setResetToken] = useState(0)
+  const [heldValues, setHeldValues] = useState<readonly number[]>(() =>
+    readHeldForms(browserSessionStorage()),
+  )
+  const [inspectedHeldValue, setInspectedHeldValue] = useState<number | null>(null)
+  const [cabinetMessage, setCabinetMessage] = useState<string | null>(null)
 
   const layout = useMemo(() => layoutNatural3d(lattice), [lattice])
+  const heldEntries = useMemo<readonly HeldFormEntry[]>(
+    () =>
+      heldValues.map((value) => {
+        const heldLattice = buildDivisorLattice(value)
+        return {
+          lattice: heldLattice,
+          relation: compareLattices(lattice, heldLattice),
+        }
+      }),
+    [heldValues, lattice],
+  )
+  const inspectedEntry =
+    heldEntries.find((entry) => entry.lattice.n === inspectedHeldValue) ?? null
+  const embeddedNodeIds = useMemo(
+    () => new Set(inspectedEntry?.relation.embeddedNodeIds ?? []),
+    [inspectedEntry],
+  )
+  const embeddedEdgeIds = useMemo(
+    () => new Set(inspectedEntry?.relation.embeddedEdgeIds ?? []),
+    [inspectedEntry],
+  )
   const selectedNode = lattice.nodes.find((node) => node.id === selectedId) ?? null
   const complementNode = selectedNode
     ? lattice.nodes.find((node) => node.id === selectedNode.complementId) ?? null
@@ -49,6 +92,54 @@ export function App() {
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     explore(input)
+  }
+
+  function persistHeldForms(nextValues: readonly number[], message: string) {
+    setHeldValues(nextValues)
+    const persisted = writeHeldForms(browserSessionStorage(), nextValues)
+    setCabinetMessage(persisted ? message : `${message} · memory only`)
+  }
+
+  function holdCurrentForm() {
+    const result = holdForm(heldValues, lattice.n)
+
+    if (result.status === 'full') {
+      setCabinetMessage('cabinet full · release one form')
+      return
+    }
+
+    setInspectedHeldValue(lattice.n)
+
+    if (result.status === 'duplicate') {
+      setCabinetMessage(`${lattice.n} is already held`)
+      return
+    }
+
+    persistHeldForms(result.values, `held ${lattice.n} · session cabinet`)
+  }
+
+  function inspectHeldForm(value: number) {
+    setInspectedHeldValue(value)
+    setCabinetMessage(`inspecting ${value} against ${lattice.n}`)
+  }
+
+  function unfoldHeldForm(value: number) {
+    setInspectedHeldValue(value)
+    setCabinetMessage(`unfolded ${value} from the cabinet`)
+    explore(String(value))
+  }
+
+  function releaseHeldForm(value: number) {
+    const releasedIndex = heldValues.indexOf(value)
+    const nextValues = releaseForm(heldValues, value)
+
+    if (inspectedHeldValue === value) {
+      setInspectedHeldValue(
+        nextValues[releasedIndex] ?? nextValues[releasedIndex - 1] ?? null,
+      )
+    }
+
+    persistHeldForms(nextValues, `released ${value}`)
   }
 
   return (
@@ -102,6 +193,17 @@ export function App() {
             </button>
           ))}
         </div>
+
+        <HeldFormCabinet
+          current={lattice.n}
+          entries={heldEntries}
+          inspectedValue={inspectedHeldValue}
+          message={cabinetMessage}
+          onHold={holdCurrentForm}
+          onInspect={inspectHeldForm}
+          onUnfold={unfoldHeldForm}
+          onRelease={releaseHeldForm}
+        />
 
         <section className="structure-card" aria-labelledby="structure-heading">
           <div className="section-heading">
@@ -184,6 +286,8 @@ export function App() {
               layout={layout}
               selectedId={selectedId}
               complementId={complementNode?.id ?? null}
+              embeddedNodeIds={embeddedNodeIds}
+              embeddedEdgeIds={embeddedEdgeIds}
               resetToken={resetToken}
               onSelect={setSelectedId}
             />
@@ -235,12 +339,14 @@ export function App() {
             {lattice.nodes.map((node) => {
               const selected = node.id === selectedId
               const complement = node.id === complementNode?.id && !selected
+              const embedded = embeddedNodeIds.has(node.id)
               return (
                 <button
                   type="button"
                   key={node.id}
                   aria-pressed={selected}
-                  className={`${selected ? 'is-selected' : ''}${complement ? ' is-complement' : ''}`}
+                  aria-label={`${node.value}${embedded ? `, contained in held form ${inspectedHeldValue}` : ''}`}
+                  className={`${embedded ? 'is-embedded' : ''}${selected ? ' is-selected' : ''}${complement ? ' is-complement' : ''}`}
                   onClick={() => setSelectedId(node.id)}
                 >
                   {node.value}

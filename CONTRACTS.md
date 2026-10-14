@@ -14,8 +14,10 @@ not, by itself, authorization to weaken the contract.
 | fact | owner | proof or inventory |
 |---|---|---|
 | factorization and lattice structure | `src/domain/lattice.ts` | `src/domain/lattice.test.ts` |
+| relationships and embedded lattice facts | `src/domain/relations.ts` | `src/domain/relations.test.ts` |
 | natural three-dimensional position | `src/domain/layout.ts` | `src/domain/layout.test.ts` |
-| scene interaction and visible details | `src/app.tsx`, `src/scene/lattice-scene.tsx` | production build and browser smoke |
+| held-form session schema | `src/session/held-forms.ts` | `src/session/held-forms.test.ts` |
+| scene, cabinet, and visible details | `src/app.tsx`, `src/cabinet/held-form-cabinet.tsx`, `src/scene/lattice-scene.tsx` | production build and browser smoke |
 | supported input boundary | `src/domain/input.ts` | `src/domain/input.test.ts` |
 | static delivery intent | `.github/workflows/deploy.yml`, `vite.config.ts` | workflow review, production build, subpath smoke |
 
@@ -28,16 +30,24 @@ not, by itself, authorization to weaken the contract.
 | `math-003` | an edge exists exactly when one exponent increases by one along one prime axis. | cover-relation model | edge tests and count identities |
 | `math-004` | the complement of `d` is `n / d`, with exponent vector `a - e`. | node model | complement involution tests |
 | `math-005` | structural identity is the descending sorted multiset of prime exponents. | lattice signature | structural-twin tests |
+| `relation-001` | a prime extrusion exists exactly when the smaller integer divides the larger, the quotient is prime, and that prime does not divide the smaller integer. | relationship model | relationship classifier tests |
+| `relation-002` | when a held integer divides the current integer, its embedded node set contains exactly the current divisors of the held integer and its embedded edge set contains exactly the covers internal to that set. | relationship model | fish-face and axis-extension tests |
 | `geo-001` | one to three prime directions use centered, equal-step natural exponent coordinates. | natural layout | layout tests |
 | `geo-002` | four or more prime directions are reported as unsupported until a named projection is accepted. | natural layout and ui | error-state tests and browser smoke |
-| `boundary-001` | the first slice performs no runtime network request and persists no user state. | application boundary | source review and browser network review |
+| `state-001` | held forms persist only as a versioned, bounded, validated list of integers in `sessionStorage`; unavailable or malformed storage leaves a working memory-only cabinet. | session adapter | schema, cap, and failure tests plus reload smoke |
+| `boundary-001` | superseded by `boundary-002`; the retired first slice performed no runtime network request and persisted no user state. | historical first-slice boundary | retired spec and supersession record |
+| `boundary-002` | the application makes no required runtime network request; browser persistence is limited to the integer-only held-form session schema. | application and session boundary | source review, payload inspection, and browser network review |
 | `delivery-001` | the pages workflow validates locked source and uploads only the generated `dist` directory. | deployment workflow | workflow review and local production build |
 
 ## interfaces and boundaries
 
 - the domain model produces renderer-independent nodes, exponent vectors, and
   cover edges.
+- the relationship model consumes complete lattices and produces comparison and
+  embedded-set facts without browser, react, three.js, or webgl imports.
 - the scene consumes the domain model; it must not recompute mathematical truth.
+- the session adapter owns browser-payload validation; application and scene
+  code must not treat stored derived facts as authority.
 - the public application does not read local corpora or private repositories.
 - future export may expose neutral lattice facts only after an accepted spec.
 - configured delivery targets github pages at `/upward/`; live provider state is
@@ -45,21 +55,37 @@ not, by itself, authorization to weaken the contract.
 
 ## data and schema
 
-the first slice has no persisted schema. values are exact javascript integers in
-the documented input range. node identity is the divisor's decimal string;
-exponent vectors remain ordered by ascending prime.
+values are exact javascript integers in the documented input range. node
+identity is the divisor's decimal string; exponent vectors remain ordered by
+ascending prime.
+
+the sole browser-persisted schema uses key `upward:held-forms:v1` and payload:
+
+```json
+{
+  "version": 1,
+  "values": [153, 306]
+}
+```
+
+`values` contains at most 12 unique integers in stable insertion order. every
+value must remain unfoldable under the current magnitude, divisor-count, and
+natural-dimension boundaries. factorization, signatures, relations, embedded
+ids, geometry, selection, and interface state are recomputed and never stored.
 
 ## lifecycle and failure semantics
 
 invalid, oversized, or currently unsupported inputs produce an inline error and
 leave the last valid lattice intact. renderer failure must not be represented as
-mathematical success.
+mathematical success. invalid or unavailable session storage must not prevent
+the default lattice or a memory-only cabinet from working.
 
 ## privacy and secrets
 
 the application and pages workflow require no secret. `.env` files are ignored
-and must never be committed. the first slice has no telemetry, account, storage,
-user upload, import, or backend boundary.
+and must never be committed. the application has no telemetry, account, durable
+profile, user upload, import, or backend boundary. held integers remain scoped
+to browser session storage rather than a durable or cross-device identity.
 
 ## configuration
 
@@ -78,12 +104,14 @@ production preview smoke at `/upward/`
 
 ## supersession
 
-- none.
+- `boundary-002`, accepted through `specs/002-held-forms-cabinet.md`, supersedes
+  the no-persisted-state portion of `boundary-001`. the no-runtime-network
+  portion remains in force.
 
 ## intentionally unspecified
 
 - the eventual high-dimensional projection;
-- the held-form cabinet, session storage, structural glow, and morphing;
+- lattice morphing and comparisons among every pair of held forms;
 - the neutral export format and any downstream adapter;
 - custom domain and release cadence.
 

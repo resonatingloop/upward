@@ -142,3 +142,53 @@ evidence:
 - `.github/workflows/deploy.yml`, the production build, and the `/upward/`
   preview smoke.
 
+## d-005 — held forms are session-scoped mathematical relations
+
+- date: 2026-10-13
+- status: accepted
+- supersedes: the no-persisted-state portion of `boundary-001`
+- related spec: `specs/002-held-forms-cabinet.md`
+
+context:
+
+the first slice can expose one integer at a time. holding `153` while unfolding
+`306` reveals a stronger relationship than a bookmark: `306 = 2 × 153`, where
+the new prime `2` extrudes the entire divisor lattice of `153` into one complete
+face of the larger lattice. structural twins such as `306` and `348` reveal a
+different relation through their common exponent signature.
+
+decision:
+
+add a cabinet of at most 12 integers scoped to browser `sessionStorage`. store
+only a schema version and integer values; recompute all mathematical facts.
+compare each held form with the active form through a pure domain classifier.
+name identity, structural twins, divisor embedding, and the narrow prime-
+extrusion case explicitly. only one inspected held form may emphasize the scene
+at a time.
+
+alternatives considered:
+
+- react memory alone, which would lose an investigation on accidental reload;
+- `localStorage`, which would create a durable profile beyond the intended
+  session cabinet;
+- storing factorization, geometry, or relationships, which would duplicate and
+  potentially drift from domain truth;
+- comparing every held pair or illuminating several embeddings at once, which
+  would turn a small relational instrument into visual soup.
+
+consequences:
+
+- same-tab reload preserves held integers while ordinary session closure ends
+  the cabinet subject to browser restoration behavior;
+- storage denial or corruption degrades to a memory-only cabinet rather than
+  breaking the active lattice;
+- structural kinship receives a violet cabinet glow; an inspected embedded form
+  receives gold node, edge, label, and divisor-rail emphasis;
+- qabbalistic meaning, user annotation, and private research data remain outside
+  the public repository and its session schema.
+
+evidence:
+
+- `relation-001`, `relation-002`, `state-001`, and `boundary-002` in
+  `CONTRACTS.md`; focused tests and rendered acceptance named by the related spec.
+

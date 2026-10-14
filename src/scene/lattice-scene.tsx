@@ -11,6 +11,8 @@ interface LatticeSceneProps {
   layout: NaturalLayout
   selectedId: string | null
   complementId: string | null
+  embeddedNodeIds: ReadonlySet<string>
+  embeddedEdgeIds: ReadonlySet<string>
   resetToken: number
   onSelect: (nodeId: string | null) => void
 }
@@ -43,14 +45,27 @@ interface LatticeNodeProps {
   node: PositionedDivisorNode
   selected: boolean
   complement: boolean
+  embedded: boolean
   onSelect: (nodeId: string) => void
 }
 
-function LatticeNode({ node, selected, complement, onSelect }: LatticeNodeProps) {
+function LatticeNode({ node, selected, complement, embedded, onSelect }: LatticeNodeProps) {
   const [hovered, setHovered] = useState(false)
-  const active = selected || complement || hovered
-  const color = selected ? '#f4b36d' : complement ? '#78dfca' : '#d8d0bf'
-  const emissive = selected ? '#8b421e' : complement ? '#174d46' : '#101617'
+  const active = selected || complement || embedded || hovered
+  const color = selected
+    ? '#f4b36d'
+    : complement
+      ? '#78dfca'
+      : embedded
+        ? '#e7c487'
+        : '#d8d0bf'
+  const emissive = selected
+    ? '#8b421e'
+    : complement
+      ? '#174d46'
+      : embedded
+        ? '#6a481f'
+        : '#101617'
 
   function select(event: ThreeEvent<MouseEvent>) {
     event.stopPropagation()
@@ -59,13 +74,13 @@ function LatticeNode({ node, selected, complement, onSelect }: LatticeNodeProps)
 
   return (
     <group position={node.position}>
-      {(selected || complement) && (
-        <mesh scale={selected ? 1.65 : 1.45}>
+      {(selected || complement || embedded) && (
+        <mesh scale={selected ? 1.65 : complement ? 1.45 : 1.34}>
           <sphereGeometry args={[0.27, 20, 20]} />
           <meshBasicMaterial
             color={color}
             transparent
-            opacity={selected ? 0.18 : 0.11}
+            opacity={selected ? 0.18 : complement ? 0.11 : 0.095}
             wireframe
           />
         </mesh>
@@ -100,7 +115,7 @@ function LatticeNode({ node, selected, complement, onSelect }: LatticeNodeProps)
         zIndexRange={[20, 0]}
       >
         <span
-          className={`node-label${selected ? ' is-selected' : ''}${complement ? ' is-complement' : ''}`}
+          className={`node-label${embedded ? ' is-embedded' : ''}${selected ? ' is-selected' : ''}${complement ? ' is-complement' : ''}`}
         >
           {node.value}
         </span>
@@ -113,6 +128,8 @@ export function LatticeScene({
   layout,
   selectedId,
   complementId,
+  embeddedNodeIds,
+  embeddedEdgeIds,
   resetToken,
   onSelect,
 }: LatticeSceneProps) {
@@ -149,15 +166,16 @@ export function LatticeScene({
           edge.targetId === selectedId ||
           edge.sourceId === complementId ||
           edge.targetId === complementId
+        const embedded = embeddedEdgeIds.has(edge.id)
 
         return (
           <Line
             key={edge.id}
             points={[source.position, target.position]}
-            color={AXIS_COLORS[edge.axis]}
-            lineWidth={related ? 2.25 : 1.05}
+            color={embedded ? '#e7c487' : AXIS_COLORS[edge.axis]}
+            lineWidth={related ? 2.25 : embedded ? 1.9 : 1.05}
             transparent
-            opacity={related ? 0.9 : 0.33}
+            opacity={related ? 0.9 : embedded ? 0.78 : 0.27}
           />
         )
       })}
@@ -168,6 +186,7 @@ export function LatticeScene({
           node={node}
           selected={node.id === selectedId}
           complement={node.id === complementId && node.id !== selectedId}
+          embedded={embeddedNodeIds.has(node.id)}
           onSelect={onSelect}
         />
       ))}

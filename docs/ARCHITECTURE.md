@@ -9,7 +9,8 @@
 ## system context
 
 upward is one static browser application. it has no backend, database, account,
-telemetry, or runtime integration.
+telemetry, or runtime integration. its only browser persistence is a bounded,
+integer-only session cabinet.
 
 ```text
 decimal input
@@ -19,6 +20,14 @@ decimal input
   -> react application state
        -> webgl scene
        -> accessible dom readout and divisor rail
+
+held integer session payload
+  -> versioned validation
+  -> reconstructed held lattices
+  -> pure current/held relationship model
+       -> cabinet relation readout
+       -> embedded node and edge ids
+       -> scene and divisor-rail emphasis
 ```
 
 ## components
@@ -27,8 +36,11 @@ decimal input
 |---|---|---|---|
 | input boundary | `src/domain/input.ts` | decimal parsing, magnitude bound, exact-dimension boundary | `parsePositiveInteger`, `assertNaturalDimension` |
 | lattice model | `src/domain/lattice.ts` | factors, divisors, signatures, complements, and cover edges | `buildDivisorLattice` |
+| relationship model | `src/domain/relations.ts` | identity, structural twins, oriented divisibility, prime extrusion, and embedded ids | `compareLattices` |
 | natural layout | `src/domain/layout.ts` | centered equal-step coordinates and camera extent | `layoutNatural3d` |
-| application | `src/app.tsx` | current valid lattice, input failure, selection, and visible readout | `App` |
+| session adapter | `src/session/held-forms.ts` | schema validation, cap, deduplication, storage reads/writes, and failure isolation | `readHeldForms`, `writeHeldForms` |
+| application | `src/app.tsx` | current valid lattice, held integers, inspected relation, input failure, and selection | `App` |
+| cabinet | `src/cabinet/held-form-cabinet.tsx` | accessible hold, inspect, unfold, and release controls plus relationship copy | `HeldFormCabinet` |
 | scene | `src/scene/lattice-scene.tsx` | three.js projection, camera controls, node/edge rendering | `LatticeScene` |
 | scene failure boundary | `src/scene/scene-boundary.tsx` | preserve the dom instrument when webgl fails | `SceneBoundary` |
 | visual system | `src/styles.css` | responsive layout, tokens, focus, and scene framing | css classes |
@@ -44,21 +56,38 @@ decimal input
 5. only after every step succeeds does `App` replace the last valid lattice.
 6. the scene consumes positions and edges; the dom consumes the same lattice for
    input status, details, and keyboard selection.
+7. session restoration validates each held integer through the same input,
+   divisor-count, and natural-dimension boundaries, then reconstructs its lattice.
+8. `compareLattices` compares each held lattice to the active lattice. only the
+   inspected relation supplies embedded ids to the scene and divisor rail.
+9. holding and releasing write the normalized integer list through the session
+   adapter. failed writes leave react's memory-only cabinet intact.
 
 ## persistence
 
-none. all state is in react memory and disappears when the page session ends.
-future session storage and export require their own accepted specs.
+the key `upward:held-forms:v1` stores `{ "version": 1, "values": number[] }` in
+browser `sessionStorage`. the list contains at most 12 distinct, currently
+unfoldable integers in insertion order. it normally survives same-tab reload and
+ends with the browsing session, subject to browser session restoration.
+
+factorization, lattice models, relationships, embedded ids, geometry, selected
+divisors, and interface state remain derived or in-memory only. malformed,
+wrong-version, blocked, or write-failing storage produces an empty or
+memory-only cabinet without interrupting the active lattice.
 
 ## external boundaries
 
 npm supplies build dependencies. the built application makes no required runtime
 network request. it reads no file, private corpus, environment value, or remote
-api.
+api. `sessionStorage` is the only runtime browser-state boundary.
 
 ## important invariants
 
 - arithmetic and layout truth live under `src/domain/`, not in scene components;
+- relationship and embedded-set truth lives in `src/domain/relations.ts`, not in
+  cabinet or scene components;
+- session storage contains integers only and cannot become mathematical
+  authority;
 - failed input leaves the last valid sculpture intact;
 - the divisor rail remains usable if webgl is unavailable;
 - see [`CONTRACTS.md`](../CONTRACTS.md) for normative wording and proof ownership.

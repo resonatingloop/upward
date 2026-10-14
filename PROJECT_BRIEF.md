@@ -45,14 +45,18 @@ explicit, mathematically neutral export boundary.
 
 ## current phase
 
-the first slice proves one complete circuit: enter a bounded positive integer
-with at most three distinct prime factors, construct its correct divisor lattice,
-explore the natural exponent geometry, and inspect a divisor with its complement.
+the current artifact proves two complete circuits: unfold and inspect one bounded
+positive integer in exact natural exponent geometry; then hold several integers
+within a tab session and expose structural kinship or exact divisor-lattice
+containment against the active form.
 
 ## success
 
 - `348` renders as a usable 12-node, 20-edge lattice;
 - `60` renders with the same structural signature and geometry;
+- held `153` becomes one complete illuminated face of `306`, with quotient `2`;
+- session storage retains only bounded integer values and never becomes
+  mathematical or private-research authority;
 - a cold checkout reaches the instrument and passes its documented validation;
 - deferred integrations do not determine the first implementation.
 

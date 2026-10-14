@@ -15,7 +15,9 @@ lattice.
 the first experimental slice is usable locally and wired for github pages. it
 accepts bounded positive integers whose prime factorizations have at most three
 distinct primes, renders their exact natural exponent geometry, and exposes each
-selected divisor's factorization, coordinate, rank, and complement.
+selected divisor's factorization, coordinate, rank, and complement. a
+session-scoped cabinet can hold up to 12 integers, recognize structural twins,
+and illuminate a held divisor lattice when it is embedded in the active form.
 
 see [`STATUS.md`](STATUS.md) for the verified checkpoint and remaining gaps.
 
@@ -45,23 +47,28 @@ upward opens at 348 with 12 nodes, 20 cover edges, and 87 paired with complement
 enter `60` and choose **unfold**. its labels change, but its structural signature
 remains `(2, 1, 1)`, the same multiplicative skeleton as `348`.
 
+for the relational circuit, unfold `153`, choose **hold 153**, then unfold `306`.
+the cabinet identifies a new-prime extrusion by `2`: the six nodes and seven
+internal covers of `153` become one illuminated face of the complete 12-node,
+20-cover lattice of `306`.
+
 ## publication
 
-the repository contains a github pages workflow, but configured intent is not
-proof of a live site. to publish it:
+the public artifact is available at
+[`https://resonatrix.tech/upward/`](https://resonatrix.tech/upward/). github pages
+serves the generated application beneath `/upward/`.
 
-1. in repository settings, choose **pages** and set the source to **github actions**;
-2. review, commit, and push the workflow and `/upward/` vite base to `main`;
-3. follow the deployment run, then verify `https://resonatingloop.github.io/upward/`.
-
-the workflow installs from the lockfile, runs the complete project check, and
-uploads only the generated `dist` directory.
+the repository workflow installs from the lockfile, runs the complete project
+check, and uploads only the generated `dist` directory. configured delivery and
+observed public availability remain separate facts; see `STATUS.md` for the last
+verified observation.
 
 ## configuration and data
 
 - configuration: none at runtime; build behavior lives in `vite.config.ts`.
 - secrets: none required. `.env` files are ignored and must not be committed.
-- persistent data: none. the first slice does not use browser storage.
+- persistent data: at most 12 validated integers in versioned browser
+  `sessionStorage`; no derived mathematics, annotations, or durable profile.
 - build-time delivery: github actions and github pages; neither is used at runtime.
 - runtime network: none required after the static assets load.
 
@@ -78,6 +85,7 @@ uploads only the generated `dist` directory.
 | `docs/DEVELOPMENT.md` | operational | current | exact setup and validation procedures |
 | `DECISIONS.md` | historical | append-only | accepted rationale and supersession |
 | `specs/001-first-slice.md` | planning | retired | the completed first transition and its original boundary |
+| `specs/002-held-forms-cabinet.md` | planning | retired | completed session cabinet and relational comparison transition |
 
 ## known limitations
 
@@ -87,9 +95,8 @@ uploads only the generated `dist` directory.
   sculpture or use the keyboard-accessible divisor rail;
 - browsers without webgl retain the mathematical readout but cannot show the
   sculpture;
-- session holding, structural glow, and export are not implemented;
-- github pages is wired but remains unpublished until the owner enables pages
-  and pushes the workflow.
+- morphing, all-pairs cabinet comparison, and export are not implemented;
+- the public route is live, but broad public-device coverage remains incomplete.
 
 ## project map
 

@@ -78,10 +78,18 @@ rendered acceptance:
 2. drag, zoom, and reset the scene;
 3. choose `4` and confirm the complement reverses to `87`;
 4. unfold `60`; confirm signature `(2, 1, 1)`, 12 nodes, and 20 covers;
-5. try `210`; confirm a four-direction error while `60` remains visible;
-6. repeat at a viewport near 430 pixels wide and confirm no horizontal overflow;
-7. disable webgl and confirm the scene failure is named while the divisor rail
-   remains present.
+5. unfold `153`, hold it, then unfold `306`; inspect the held form and confirm
+   `face · ×2`, six emphasized divisor values, seven internal covers, 12 total
+   nodes, and 20 total covers;
+6. select `153` and confirm complement `2`;
+7. reload the same tab and confirm held `153` returns from the integer-only
+   session payload;
+8. hold `306`, unfold `348`, and confirm the held `306` card reports
+   `same body` with structural signature `(2, 1, 1)`;
+9. try `210`; confirm a four-direction error while `348` remains visible;
+10. repeat near 430 pixels wide and confirm no horizontal overflow;
+11. disable webgl and confirm the scene failure is named while the relationship
+    readout and emphasized divisor-rail values remain present.
 
 ## configuration and precedence
 
@@ -96,13 +104,14 @@ real `.env` merely to run the first slice.
 
 ## github pages publication
 
-configured publication uses github pages without a deployment branch:
+configured publication uses github pages without a deployment branch. the
+current public artifact is `https://resonatrix.tech/upward/`:
 
 1. in github repository settings, open **pages**;
 2. under **build and deployment**, set **source** to **github actions**;
 3. review, commit, and push the workflow and vite base change to `main`;
 4. inspect the `deploy upward to pages` workflow run;
-5. verify the rendered artifact at `https://resonatingloop.github.io/upward/`.
+5. verify the rendered artifact at `https://resonatrix.tech/upward/`.
 
 the workflow also supports a manual run from the actions tab. it needs no
 repository secret. the build job receives only `contents: read`; only the
@@ -115,10 +124,17 @@ changing provider state remains an owner-operated github action.
 
 ## persistent data
 
-- location: none;
-- backup: not applicable;
-- reset: reload the page;
-- migrations: none.
+- location: browser `sessionStorage`, key `upward:held-forms:v1`;
+- schema: `{ "version": 1, "values": number[] }`, with at most 12 distinct,
+  currently unfoldable integers;
+- backup: not applicable; the cabinet is intentionally session-scoped;
+- reset: release each held form, remove the named key in browser developer
+  tools, or end the ordinary tab session. browser session restoration may revive
+  a tab and its session storage;
+- recovery: malformed or inaccessible storage is ignored; the cabinet continues
+  in memory and rewrites a valid payload only after the next hold or release;
+- migrations: no earlier schema exists. a future version requires an explicit
+  migration or documented discard decision.
 
 ## troubleshooting and recovery
 
@@ -137,6 +153,14 @@ changing provider state remains an owner-operated github action.
 - cause: webgl is disabled or no gpu/software context can be created.
 - recover: enable webgl or use a supported browser. the divisor rail and numeric
   readout remain available, but they do not prove the 3d interaction.
+
+### held forms do not survive reload
+
+- diagnose: inspect whether the browser permits `sessionStorage` for the page;
+- cause: storage may be disabled, unavailable, or rejected by browser policy;
+- recover: continue with the memory-only cabinet for the current load, or permit
+  session storage and perform another hold or release. the lattice itself does
+  not depend on storage.
 
 ### source changes do not appear
 
