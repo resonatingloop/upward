@@ -1,20 +1,16 @@
 # upward 🪩
 
-🔮 **ever wondered what a number looks like, or what might be hiding inside it?**
-
-**upward** is a free, interactive 3d instrument for exploring the hidden mathematical structures of numbers, their relationships, and the curious patterns they form.
-
-✨ **enter the number-space:**
-• unfold any positive integer into an interactive 3d sculpture  
-• discover the factors and structures concealed within a number  
-• collect and compare numbers to reveal shared geometries and unexpected connections  
-• explore higher-dimensional shapes projected into 3d  
-
-part mathematical playground, part numerical curiosity cabinet. whether you're interested in number theory, gematria, sacred geometry, or just enjoy chasing strange patterns, there's something here to explore.
-
-👹🪩 **welcome to the zonotopal nightclub for projected hypercubes.**
-
-🔗 **enter upward:** https://resonatrix.tech/upward
+upward is an interactive instrument for exploring the hidden structure of integers.
+It turns numbers into navigable divisor bodies: exact lattices when the structure fits natural exponent space, and ranked zonotopal projections when the form exceeds three prime directions.
+Or, less formally:
+upward is a zonotopal nightclub for projected hypercubes.
+With it, you can:
+- unfold a positive integer into its divisor lattice
+- compare integers by structural signature
+- detect when one number appears as a face or nested body within another
+- project higher-dimensional multiplicative forms into view
+- inspect complements, ranks, and prime-direction structure
+The result is part mathematical instrument, part curiosity cabinet: a way to see the recurring bodies integers inhabit.
 
 ---
 
