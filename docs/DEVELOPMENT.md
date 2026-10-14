@@ -36,6 +36,16 @@ expected success:
 vite prints a local url; upward opens at 348 with a 12-node, 20-edge scene.
 ```
 
+the production build uses the github pages project base. prove that artifact
+locally with:
+
+```text
+npm run build
+npm run preview
+```
+
+open the printed url beneath `/upward/`.
+
 ## test and validate
 
 focused mathematical proof:
@@ -79,9 +89,29 @@ rendered acceptance:
 |---|---|---|---|
 | source constants | `src/domain/input.ts`, `src/domain/lattice.ts` | computation limits | only runtime limits |
 | vite build | `vite.config.ts` | asset base, react transform, test environment | build time |
+| pages workflow | `.github/workflows/deploy.yml` | validation, artifact scope, publication trigger | delivery time |
 
 the application has no runtime environment configuration. never add or inspect a
 real `.env` merely to run the first slice.
+
+## github pages publication
+
+configured publication uses github pages without a deployment branch:
+
+1. in github repository settings, open **pages**;
+2. under **build and deployment**, set **source** to **github actions**;
+3. review, commit, and push the workflow and vite base change to `main`;
+4. inspect the `deploy upward to pages` workflow run;
+5. verify the rendered artifact at `https://resonatingloop.github.io/upward/`.
+
+the workflow also supports a manual run from the actions tab. it needs no
+repository secret. the build job receives only `contents: read`; only the
+dependent deploy job receives `pages: write` and `id-token: write`. it uploads
+`dist` rather than the repository root.
+
+to disable automatic publication without deleting history, disable the workflow
+in github or remove its `push` trigger in a reviewed change. removing pages or
+changing provider state remains an owner-operated github action.
 
 ## persistent data
 
@@ -113,3 +143,12 @@ real `.env` merely to run the first slice.
 - diagnose: confirm the vite process was started from this checkout and inspect
   the url printed by `npm run dev`.
 - recover: stop the stale process and restart the documented command.
+
+### the pages site returns missing assets
+
+- diagnose: inspect `dist/index.html`; generated asset urls must begin with
+  `/upward/` for the repository project site.
+- cause: the vite base and pages project path disagree, or an older artifact is
+  still deployed.
+- recover: restore `base: '/upward/'`, rerun `npm run check`, and manually rerun
+  the pages workflow after reviewing the pending change.

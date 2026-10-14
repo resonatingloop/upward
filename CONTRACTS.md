@@ -17,6 +17,7 @@ not, by itself, authorization to weaken the contract.
 | natural three-dimensional position | `src/domain/layout.ts` | `src/domain/layout.test.ts` |
 | scene interaction and visible details | `src/app.tsx`, `src/scene/lattice-scene.tsx` | production build and browser smoke |
 | supported input boundary | `src/domain/input.ts` | `src/domain/input.test.ts` |
+| static delivery intent | `.github/workflows/deploy.yml`, `vite.config.ts` | workflow review, production build, subpath smoke |
 
 ## invariants
 
@@ -30,6 +31,7 @@ not, by itself, authorization to weaken the contract.
 | `geo-001` | one to three prime directions use centered, equal-step natural exponent coordinates. | natural layout | layout tests |
 | `geo-002` | four or more prime directions are reported as unsupported until a named projection is accepted. | natural layout and ui | error-state tests and browser smoke |
 | `boundary-001` | the first slice performs no runtime network request and persists no user state. | application boundary | source review and browser network review |
+| `delivery-001` | the pages workflow validates locked source and uploads only the generated `dist` directory. | deployment workflow | workflow review and local production build |
 
 ## interfaces and boundaries
 
@@ -38,6 +40,8 @@ not, by itself, authorization to weaken the contract.
 - the scene consumes the domain model; it must not recompute mathematical truth.
 - the public application does not read local corpora or private repositories.
 - future export may expose neutral lattice facts only after an accepted spec.
+- configured delivery targets github pages at `/upward/`; live provider state is
+  external evidence and must not be inferred from the repository.
 
 ## data and schema
 
@@ -53,14 +57,15 @@ mathematical success.
 
 ## privacy and secrets
 
-the application requires no secret. `.env` files are ignored and must never be
-committed. the first slice has no telemetry, account, storage, upload, import, or
-backend boundary.
+the application and pages workflow require no secret. `.env` files are ignored
+and must never be committed. the first slice has no telemetry, account, storage,
+user upload, import, or backend boundary.
 
 ## configuration
 
 there is no runtime configuration in the first slice. build behavior is owned by
-`vite.config.ts`; computation limits are source constants with test coverage.
+`vite.config.ts`; deployment intent is owned by `.github/workflows/deploy.yml`;
+computation limits are source constants with test coverage.
 
 ## required validation
 
@@ -68,6 +73,7 @@ there is no runtime configuration in the first slice. build behavior is owned by
 npm run check
 python3 ~/.codex/skills/manage-project-docs/scripts/check_docset.py . --review-claims
 browser smoke at desktop and narrow viewport
+production preview smoke at `/upward/`
 ```
 
 ## supersession
@@ -79,5 +85,5 @@ browser smoke at desktop and narrow viewport
 - the eventual high-dimensional projection;
 - the held-form cabinet, session storage, structural glow, and morphing;
 - the neutral export format and any downstream adapter;
-- deployment provider and public url.
+- custom domain and release cadence.
 

@@ -12,10 +12,10 @@ lattice.
 
 ## current state
 
-the first experimental slice is usable locally. it accepts bounded positive
-integers whose prime factorizations have at most three distinct primes, renders
-their exact natural exponent geometry, and exposes each selected divisor's
-factorization, coordinate, rank, and complement.
+the first experimental slice is usable locally and wired for github pages. it
+accepts bounded positive integers whose prime factorizations have at most three
+distinct primes, renders their exact natural exponent geometry, and exposes each
+selected divisor's factorization, coordinate, rank, and complement.
 
 see [`STATUS.md`](STATUS.md) for the verified checkpoint and remaining gaps.
 
@@ -45,12 +45,24 @@ upward opens at 348 with 12 nodes, 20 cover edges, and 87 paired with complement
 enter `60` and choose **unfold**. its labels change, but its structural signature
 remains `(2, 1, 1)`, the same multiplicative skeleton as `348`.
 
+## publication
+
+the repository contains a github pages workflow, but configured intent is not
+proof of a live site. to publish it:
+
+1. in repository settings, choose **pages** and set the source to **github actions**;
+2. review, commit, and push the workflow and `/upward/` vite base to `main`;
+3. follow the deployment run, then verify `https://resonatingloop.github.io/upward/`.
+
+the workflow installs from the lockfile, runs the complete project check, and
+uploads only the generated `dist` directory.
+
 ## configuration and data
 
 - configuration: none at runtime; build behavior lives in `vite.config.ts`.
 - secrets: none required. `.env` files are ignored and must not be committed.
 - persistent data: none. the first slice does not use browser storage.
-- external integrations: none.
+- build-time delivery: github actions and github pages; neither is used at runtime.
 - runtime network: none required after the static assets load.
 
 ## documentation authority
@@ -75,7 +87,9 @@ remains `(2, 1, 1)`, the same multiplicative skeleton as `348`.
   sculpture or use the keyboard-accessible divisor rail;
 - browsers without webgl retain the mathematical readout but cannot show the
   sculpture;
-- session holding, structural glow, export, and deployment are not implemented.
+- session holding, structural glow, and export are not implemented;
+- github pages is wired but remains unpublished until the owner enables pages
+  and pushes the workflow.
 
 ## project map
 
