@@ -8,13 +8,14 @@
 
 ## Verified checkpoint
 
-four slices are implemented and locally verified: a bounded integer becomes a
+five slices are implemented and locally verified: a bounded integer becomes a
 tested divisor lattice and responsive webgl instrument; a session-scoped cabinet
 can hold integers, name their relationship to the active form, and illuminate an
 embedded divisor lattice without changing its topology; the cabinet keeps
 stable-order collection separate from one full-size front reading and an
 expandable full-card drawer; four-plus-dimensional exponent bodies now enter
-through an explicitly named ranked zonotopal projection.
+through an explicitly named ranked zonotopal projection; the exact lattice model
+and public scene now have separate computation and inhabitable-rendering budgets.
 
 verification performed:
 
@@ -31,7 +32,7 @@ production preview at `/upward/`
 evidence of success:
 
 ```text
-41 tests passed; documentation 0 errors/0 warnings; 348 rendered 12 nodes/20 covers;
+47 tests passed; documentation 0 errors/0 warnings; 348 rendered 12 nodes/20 covers;
 orbit, zoom, pan, and reset passed; 87/4 reversed; 60 retained (2, 1, 1);
 210 rendered 16 nodes/32 covers through a 4→3 ranked zonotopal projection with
 four labeled directions and 0 coincident shadows; 105/2 reversed; orbit, zoom,
@@ -54,12 +55,22 @@ no-webgl retained the projection warrant and all 16 divisor controls; runtime
 resources remained on the local preview origin.
 pages workflow reviewed; production assets resolved beneath `/upward/` locally.
 public custom-domain route returned http 200 from github pages.
+510510 remained admitted as a seven-direction 128-node/448-cover cube in domain
+proof; 278460 remained admitted at 144 nodes/480 covers; 12441600 was refused at 216
+nodes/522 covers and 360360 at 192 nodes/656 covers against the visible 192-node/
+640-cover rendering budget; both retained the same 278460 canvas, selected 210,
+and 144 divisor controls. the retained scene orbited after refusal; 430 px
+overflow remained 0; session restoration reduced [153, 12441600, 210, 360360,
+348] to [153, 210, 348] without changing the v1 payload schema; production-
+preview runtime errors were empty and resources remained on the preview origin.
 ```
 
 ## Working now
 
 - strict decimal input from `1` through `1,000,000,000`;
 - complete divisor lattice generation with a 512-node computation guard;
+- a separate 192-node / 640-cover scene-admission guard shared by active input
+  and held-form normalization;
 - exact centered natural geometry for zero through three prime directions;
 - deterministic ranked zonotopal geometry for four-plus prime directions,
   including equal cover length, positive equal rank rise, antipodal complements,
@@ -101,22 +112,23 @@ public custom-domain route returned http 200 from github pages.
 - public-device coverage for the new native-dialog drawer remains incomplete;
   the current rendered proof used local headless chromium, while the established
   scene proof also includes owner-visible chrome and fresh-profile firefox.
-- the projected room has local isolated-chromium webgl proof, but owner-visible
-  and deployed acceptance of `210` remain pending.
+- the scene budget has local isolated-chromium webgl proof, but deployed
+  acceptance of its refusal path remains pending.
 
 ## Active work
 
 - accepted spec: none; `specs/001-first-slice.md`,
   `specs/002-held-forms-cabinet.md`,
-  `specs/003-cabinet-front-and-drawer.md`, and
-  `specs/004-ranked-zonotopal-projection.md` are retired
+  `specs/003-cabinet-front-and-drawer.md`,
+  `specs/004-ranked-zonotopal-projection.md`, and
+  `specs/005-scene-budget.md` are retired
 - current focus: none
 - blockers: none
 
 ## Next useful action
 
-review and commit the ranked-projection diff, push it to `main`, observe the
-pages workflow, and exercise `210` at the public custom-domain route before
+review and commit the scene-budget diff, push it to `main`, observe the pages
+workflow, and exercise one refusal at the public custom-domain route before
 treating the deployed artifact as updated.
 
 ## Re-entry notes
@@ -128,6 +140,7 @@ treating the deployed artifact as updated.
   `sessionStorage['upward:held-forms:v1']`; release them or end the ordinary tab
   session to clear the cabinet, subject to browser session restoration;
 - external dependencies: npm packages at build time only;
-- recovery warning: preserve the last valid lattice on input failure and always
-  name four-plus-dimensional geometry as a projection with disclosed loss.
+- recovery warning: preserve the last valid lattice on input failure, enforce
+  both scene measures before rendering, and always name four-plus-dimensional
+  geometry as a projection with disclosed loss.
 

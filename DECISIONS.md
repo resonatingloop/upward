@@ -293,3 +293,49 @@ evidence:
   desktop, narrow, session-reload, complement, fish-face, and no-webgl browser
   acceptance named by the related spec.
 
+## d-008 — mathematical construction and scene admission are separate budgets
+
+- date: 2026-10-14
+- status: accepted
+- supersedes: none
+- related spec: `specs/005-scene-budget.md`
+
+context:
+
+the 512-node lattice guard prevents accidental or hostile computation, but the
+current renderer creates a labeled sphere for every divisor and a separate line
+for every cover. owner-visible use found `278460`, with 144 nodes and 480
+covers, still inhabitable with slight rotation lag and already near the limit of
+useful visual distinction.
+
+decision:
+
+retain the 512-node renderer-independent construction boundary. separately
+admit a public scene only when it has at most 192 nodes and 640 covers. apply
+that policy equally to active unfolds and held-form normalization. name refusal
+as a rendering budget and preserve the last valid lattice.
+
+alternatives considered:
+
+- lowering the mathematical node guard, which would confuse exact construction
+  capacity with the current renderer's product boundary;
+- limiting source dimensions, which rejects sparse high-dimensional bodies
+  while admitting dense lower-dimensional ones;
+- counting nodes alone, which ignores that cover lines dominate dense scenes;
+- device-specific benchmarking, which would make the same integer behave
+  unpredictably across visits and hardware.
+
+consequences:
+
+- `278460` remains an admitted redline at 144 nodes and 480 covers;
+- bodies over either scene measure are refused before they replace active state;
+- stored values above the current scene budget disappear from the reconstructed
+  cabinet without changing its integer-only schema;
+- a future batched renderer may justify a new budget only through another
+  explicit decision and rendered proof.
+
+evidence:
+
+- `render-001` in `CONTRACTS.md`, focused scene-budget and session tests, and the
+  desktop and narrow refusal acceptance named by the related spec.
+

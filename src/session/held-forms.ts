@@ -1,5 +1,6 @@
 import { parsePositiveInteger } from '../domain/input'
 import { buildDivisorLattice } from '../domain/lattice'
+import { assertSceneBudget } from '../domain/scene-budget'
 
 export const HELD_FORMS_STORAGE_KEY = 'upward:held-forms:v1'
 export const HELD_FORMS_SCHEMA_VERSION = 1
@@ -22,7 +23,7 @@ function isUnfoldableInteger(value: unknown): value is number {
 
   try {
     const parsed = parsePositiveInteger(String(value))
-    buildDivisorLattice(parsed)
+    assertSceneBudget(buildDivisorLattice(parsed))
     return true
   } catch {
     return false

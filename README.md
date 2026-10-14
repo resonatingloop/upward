@@ -36,6 +36,9 @@ cabinet can hold up to 12 integers, recognize structural twins, and illuminate a
 held divisor lattice when it is embedded in the active form. the cabinet keeps
 its insertion order in a compact index, brings an answering form to one full-
 size front card, and opens every full card in a pullout drawer.
+the exact lattice model remains bounded at 512 divisors, while the public scene
+admits at most 192 nodes and 640 covers so mathematical possibility does not
+silently become an unusable rendering.
 
 see [`STATUS.md`](STATUS.md) for the verified checkpoint and remaining gaps.
 
@@ -116,12 +119,14 @@ verified observation.
 | `specs/002-held-forms-cabinet.md` | planning | retired | completed session cabinet and relational comparison transition |
 | `specs/003-cabinet-front-and-drawer.md` | planning | retired | completed front-card and pullout-drawer transition |
 | `specs/004-ranked-zonotopal-projection.md` | planning | retired | completed named-projection transition for four-plus-dimensional lattices |
+| `specs/005-scene-budget.md` | planning | retired | completed bounded scene-complexity transition |
 
 ## known limitations
 
 - exact natural coordinates stop at three distinct prime directions; higher
   dimensions use the disclosed ranked zonotopal projection;
-- input is bounded at `1,000,000,000` and 512 divisor nodes;
+- input is bounded at `1,000,000,000` and 512 computed divisor nodes; scenes
+  admit at most 192 nodes and 640 covers;
 - screen-space labels can overlap or hide at some camera angles; rotate the
   sculpture or use the keyboard-accessible divisor rail;
 - browsers without webgl retain the mathematical readout but cannot show the

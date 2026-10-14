@@ -16,6 +16,7 @@ integer-only session cabinet.
 decimal input
   -> strict input boundary
   -> pure divisor-lattice model
+  -> scene-complexity admission
   -> spatial layout dispatch
        -> exact natural 3d layout (0–3 prime directions)
        -> ranked zonotopal projection (4+ prime directions)
@@ -40,6 +41,7 @@ held integer session payload
 |---|---|---|---|
 | input boundary | `src/domain/input.ts` | decimal parsing and magnitude bound | `parsePositiveInteger` |
 | lattice model | `src/domain/lattice.ts` | factors, divisors, signatures, complements, and cover edges | `buildDivisorLattice` |
+| scene budget | `src/domain/scene-budget.ts` | deterministic 192-node / 640-cover admission policy | `assertSceneBudget` |
 | relationship model | `src/domain/relations.ts` | identity, structural twins, oriented divisibility, prime extrusion, and embedded ids | `compareLattices` |
 | natural layout | `src/domain/layout.ts` | centered equal-step coordinates and camera extent | `layoutNatural3d` |
 | projected layout | `src/domain/projection.ts` | ranked generators, centered projected coordinates, camera extent, and coincidence groups | `layoutRankedZonotopal3d` |
@@ -57,22 +59,25 @@ held integer session payload
 1. the form passes a string to `parsePositiveInteger`.
 2. `buildDivisorLattice` factorizes the integer and creates all nodes and exact
    covers without importing react or three.js.
-3. `layoutLattice3d` retains exact natural coordinates for zero through three
+3. `assertSceneBudget` admits the complete lattice only when it contains at
+   most 192 nodes and 640 covers. refusal leaves the active state unchanged.
+4. `layoutLattice3d` retains exact natural coordinates for zero through three
    prime directions and selects the named ranked zonotopal projection thereafter.
-4. both layouts center exponent axes, so complementary divisors become spatial
+5. both layouts center exponent axes, so complementary divisors become spatial
    opposites. the projected layout additionally preserves equal cover length and
    equal positive world-height rise while reporting coincident node centers.
-5. only after every step succeeds does `App` replace the last valid lattice.
-6. the scene consumes positions and edges; the dom consumes the same lattice for
+6. only after every step succeeds does `App` replace the last valid lattice.
+7. the scene consumes positions and edges; the dom consumes the same lattice for
    input status, details, and keyboard selection.
-7. session restoration validates each held integer through the same input and
-   divisor-count boundaries, then reconstructs its lattice and spatial layout.
-8. `compareLattices` compares each held lattice to the active lattice. after a
+8. session restoration validates each held integer through the same magnitude,
+   divisor-count, and scene-complexity boundaries, then reconstructs its lattice
+   and spatial layout.
+9. `compareLattices` compares each held lattice to the active lattice. after a
    successful unfold, the current answering inspection remains in front or the
    first answer in stable insertion order comes forward. this derived view does
    not reorder session state.
-9. only the front relation supplies embedded ids to the scene and divisor rail.
-10. holding and releasing write the normalized integer list through the session
+10. only the front relation supplies embedded ids to the scene and divisor rail.
+11. holding and releasing write the normalized integer list through the session
    adapter. failed writes leave react's memory-only cabinet intact.
 
 ## persistence
@@ -102,6 +107,7 @@ api. `sessionStorage` is the only runtime browser-state boundary.
 - session storage contains integers only and cannot become mathematical
   authority;
 - failed input leaves the last valid sculpture intact;
+- scene admission depends on node and cover counts, never source dimension;
 - the divisor rail remains usable if webgl is unavailable;
 - see [`CONTRACTS.md`](../CONTRACTS.md) for normative wording and proof ownership.
 

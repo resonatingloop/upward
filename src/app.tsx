@@ -12,6 +12,7 @@ import {
   type DivisorLattice,
 } from './domain/lattice'
 import { compareLattices } from './domain/relations'
+import { assertSceneBudget } from './domain/scene-budget'
 import { layoutLattice3d } from './domain/spatial-layout'
 import { AXIS_COLORS, LatticeScene } from './scene/lattice-scene'
 import { SceneBoundary } from './scene/scene-boundary'
@@ -23,7 +24,7 @@ import {
   writeHeldForms,
 } from './session/held-forms'
 
-const INITIAL_LATTICE = buildDivisorLattice(348)
+const INITIAL_LATTICE = assertSceneBudget(buildDivisorLattice(348))
 const SPECIMENS = [348, 60, 72, 64, 210] as const
 
 function signatureText(lattice: DivisorLattice): string {
@@ -98,7 +99,7 @@ export function App() {
 
     try {
       const value = parsePositiveInteger(raw)
-      const nextLattice = buildDivisorLattice(value)
+      const nextLattice = assertSceneBudget(buildDivisorLattice(value))
       setLattice(nextLattice)
       setInspectedHeldValue((currentInspection) =>
         chooseCabinetFront(

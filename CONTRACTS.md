@@ -19,7 +19,7 @@ not, by itself, authorization to weaken the contract.
 | ranked higher-dimensional projection | `src/domain/projection.ts`, `src/domain/spatial-layout.ts` | `src/domain/projection.test.ts` |
 | held-form session schema | `src/session/held-forms.ts` | `src/session/held-forms.test.ts` |
 | scene, cabinet, and visible details | `src/app.tsx`, `src/cabinet/cabinet-view.ts`, `src/cabinet/held-form-cabinet.tsx`, `src/scene/lattice-scene.tsx` | focused cabinet tests, production build, and browser smoke |
-| supported input boundary | `src/domain/input.ts` | `src/domain/input.test.ts` |
+| supported input boundary | `src/domain/input.ts`, `src/domain/lattice.ts`, `src/domain/scene-budget.ts` | focused input, lattice, and scene-budget tests |
 | static delivery intent | `.github/workflows/deploy.yml`, `vite.config.ts` | workflow review, production build, subpath smoke |
 
 ## invariants
@@ -36,6 +36,7 @@ not, by itself, authorization to weaken the contract.
 | `geo-001` | one to three prime directions use centered, equal-step natural exponent coordinates. | natural layout | layout tests |
 | `geo-002` | four or more prime directions use the named deterministic ranked zonotopal projection: exact covers retain equal length and positive equal world-height rise, complements remain antipodal, and higher-dimensional incidence is explicitly reported as projected. | projected layout and ui | projection tests and 210 browser smoke |
 | `geo-003` | projected node-center coincidences are domain metadata and their group count is disclosed in the interface; the projection never presents itself as injective without proof. | projected layout and ui | coincidence tests, visible warrant, and browser smoke |
+| `render-001` | the exact lattice model may construct at most 512 nodes; the public scene admits at most 192 nodes and 640 covers. a scene-budget refusal names rendering capacity and leaves the last valid lattice intact. | lattice construction, scene-budget policy, and application | focused boundary tests and rendered refusal smoke |
 | `state-001` | held forms persist only as a versioned, bounded, validated list of integers in `sessionStorage`; unavailable or malformed storage leaves a working memory-only cabinet. | session adapter | schema, cap, and failure tests plus reload smoke |
 | `boundary-001` | superseded by `boundary-002`; the retired first slice performed no runtime network request and persisted no user state. | historical first-slice boundary | retired spec and supersession record |
 | `boundary-002` | the application makes no required runtime network request; browser persistence is limited to the integer-only held-form session schema. | application and session boundary | source review, payload inspection, and browser network review |
@@ -71,9 +72,9 @@ the sole browser-persisted schema uses key `upward:held-forms:v1` and payload:
 ```
 
 `values` contains at most 12 unique integers in stable insertion order. every
-value must remain unfoldable under the current magnitude and divisor-count
-boundaries. factorization, signatures, relations, embedded ids, geometry,
-selection, and interface state are recomputed and never stored.
+value must remain unfoldable under the current magnitude, divisor-count, and
+scene-complexity boundaries. factorization, signatures, relations, embedded
+ids, geometry, selection, and interface state are recomputed and never stored.
 
 ## lifecycle and failure semantics
 
@@ -93,8 +94,8 @@ to browser session storage rather than a durable or cross-device identity.
 
 there is no runtime configuration in the application. build behavior is owned
 by `vite.config.ts`, which disables environment-file loading; deployment intent
-is owned by `.github/workflows/deploy.yml`; computation limits are source
-constants with test coverage.
+is owned by `.github/workflows/deploy.yml`; computation and scene-complexity
+limits are source constants with test coverage.
 
 ## required validation
 

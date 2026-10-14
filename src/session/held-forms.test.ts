@@ -36,6 +36,17 @@ describe('held-form session schema', () => {
     ).toEqual([153, 210, 348])
   })
 
+  it('discards forms outside either scene boundary without reordering survivors', () => {
+    expect(
+      decodeHeldForms(
+        JSON.stringify({
+          version: 1,
+          values: [153, 12_441_600, 210, 360_360, 348],
+        }),
+      ),
+    ).toEqual([153, 210, 348])
+  })
+
   it('ignores malformed and wrong-version payloads', () => {
     expect(decodeHeldForms('{not json')).toEqual([])
     expect(decodeHeldForms(JSON.stringify({ version: 2, values: [153] }))).toEqual([])

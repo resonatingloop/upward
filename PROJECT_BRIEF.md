@@ -73,8 +73,8 @@ extension of the instrument.
   three-dimensional cases;
 - deterministic ranked zonotopal projection with visible information-loss and
   coincidence disclosure for higher-dimensional cases;
-- strict computation limits protect the browser from hostile or accidental
-  resource use;
+- separate computation and scene-complexity limits protect the browser while
+  keeping admitted forms visually inhabitable;
 - public source contains no private corpus material, secret, or environment
   value.
 

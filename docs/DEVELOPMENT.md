@@ -104,12 +104,18 @@ rendered acceptance:
 15. emulate reduced motion and confirm the drawer opens without travel;
 16. disable webgl and confirm the scene failure is named while the projection
     note, relationship readout, and divisor-rail values remain present.
+17. unfold `278460`; confirm its 144-node, 480-cover `6→3` redline remains
+    admitted and interactive;
+18. attempt `12441600`, then `360360`; confirm the first names 216 nodes / 522
+    covers, the second names 192 nodes / 656 covers, both report the 192-node /
+    640-cover rendering budget, and neither replaces the redline field;
+19. repeat one refusal near 430 pixels and confirm no horizontal overflow.
 
 ## configuration and precedence
 
 | source | location | owns | precedence |
 |---|---|---|---|
-| source constants | `src/domain/input.ts`, `src/domain/lattice.ts` | computation limits | only runtime limits |
+| source constants | `src/domain/input.ts`, `src/domain/lattice.ts`, `src/domain/scene-budget.ts` | magnitude, computation, and scene-complexity limits | only runtime limits |
 | vite build | `vite.config.ts` | asset base, disabled environment-file loading, react transform, test environment | build time |
 | pages workflow | `.github/workflows/deploy.yml` | validation, artifact scope, publication trigger | delivery time |
 
@@ -140,8 +146,8 @@ changing provider state remains an owner-operated github action.
 ## persistent data
 
 - location: browser `sessionStorage`, key `upward:held-forms:v1`;
-- schema: `{ "version": 1, "values": number[] }`, with at most 12 distinct,
-  currently unfoldable integers;
+- schema: `{ "version": 1, "values": number[] }`, with at most 12 distinct
+  integers inside the current magnitude, computation, and scene boundaries;
 - backup: not applicable; the cabinet is intentionally session-scoped;
 - reset: release each held form, remove the named key in browser developer
   tools, or end the ordinary tab session. browser session restoration may revive
