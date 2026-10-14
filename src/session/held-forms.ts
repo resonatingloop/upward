@@ -1,4 +1,4 @@
-import { assertNaturalDimension, parsePositiveInteger } from '../domain/input'
+import { parsePositiveInteger } from '../domain/input'
 import { buildDivisorLattice } from '../domain/lattice'
 
 export const HELD_FORMS_STORAGE_KEY = 'upward:held-forms:v1'
@@ -22,8 +22,7 @@ function isUnfoldableInteger(value: unknown): value is number {
 
   try {
     const parsed = parsePositiveInteger(String(value))
-    const lattice = buildDivisorLattice(parsed)
-    assertNaturalDimension(lattice)
+    buildDivisorLattice(parsed)
     return true
   } catch {
     return false

@@ -2,7 +2,7 @@
 
 > **continuity role:** operational front door
 > **status:** experimental
-> **last verified:** 2026-10-13
+> **last verified:** 2026-10-14
 > **owns:** the shortest successful use and the map to deeper documentation
 > **update when:** installation, primary use, maturity, or document authority changes
 
@@ -12,14 +12,15 @@ lattice.
 
 ## current state
 
-the first experimental slice is usable locally and wired for github pages. it
-accepts bounded positive integers whose prime factorizations have at most three
-distinct primes, renders their exact natural exponent geometry, and exposes each
-selected divisor's factorization, coordinate, rank, and complement. a
-session-scoped cabinet can hold up to 12 integers, recognize structural twins,
-and illuminate a held divisor lattice when it is embedded in the active form.
-the cabinet keeps its insertion order in a compact index, brings an answering
-form to one full-size front card, and opens every full card in a pullout drawer.
+the experimental instrument is usable locally and wired for github pages. it
+renders bounded integers with up to three distinct primes in exact natural
+exponent geometry, then casts higher-dimensional exponent bodies through an
+explicitly named ranked zonotopal projection. every selected divisor retains
+its exact factorization, coordinate, rank, and complement. a session-scoped
+cabinet can hold up to 12 integers, recognize structural twins, and illuminate a
+held divisor lattice when it is embedded in the active form. the cabinet keeps
+its insertion order in a compact index, brings an answering form to one full-
+size front card, and opens every full card in a pullout drawer.
 
 see [`STATUS.md`](STATUS.md) for the verified checkpoint and remaining gaps.
 
@@ -48,6 +49,10 @@ upward opens at 348 with 12 nodes, 20 cover edges, and 87 paired with complement
 
 enter `60` and choose **unfold**. its labels change, but its structural signature
 remains `(2, 1, 1)`, the same multiplicative skeleton as `348`.
+
+choose specimen `210` to enter the ranked projection: its four prime directions
+become a deterministic `4→3` zonotopal shadow with 16 divisors, 32 covers, exact
+rank rise, antipodal complements, and an explicit information-loss warrant.
 
 for the relational circuit, unfold `153`, choose **hold 153**, then unfold `306`.
 the cabinet identifies a new-prime extrusion by `2`: the six nodes and seven
@@ -95,16 +100,19 @@ verified observation.
 | `specs/001-first-slice.md` | planning | retired | the completed first transition and its original boundary |
 | `specs/002-held-forms-cabinet.md` | planning | retired | completed session cabinet and relational comparison transition |
 | `specs/003-cabinet-front-and-drawer.md` | planning | retired | completed front-card and pullout-drawer transition |
+| `specs/004-ranked-zonotopal-projection.md` | planning | retired | completed named-projection transition for four-plus-dimensional lattices |
 
 ## known limitations
 
-- the exact natural renderer supports at most three distinct prime directions;
+- exact natural coordinates stop at three distinct prime directions; higher
+  dimensions use the disclosed ranked zonotopal projection;
 - input is bounded at `1,000,000,000` and 512 divisor nodes;
 - screen-space labels can overlap or hide at some camera angles; rotate the
   sculpture or use the keyboard-accessible divisor rail;
 - browsers without webgl retain the mathematical readout but cannot show the
   sculpture;
-- morphing, all-pairs cabinet comparison, and export are not implemented;
+- editable projectors, exploded coincident shadows, morphing, all-pairs cabinet
+  comparison, and export are not implemented;
 - the public route is live, but broad public-device coverage remains incomplete.
 
 ## project map

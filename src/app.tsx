@@ -5,14 +5,14 @@ import {
   type HeldFormEntry,
 } from './cabinet/cabinet-view'
 import { HeldFormCabinet } from './cabinet/held-form-cabinet'
-import { assertNaturalDimension, parsePositiveInteger } from './domain/input'
+import { parsePositiveInteger } from './domain/input'
 import {
   buildDivisorLattice,
   formatFactorization,
   type DivisorLattice,
 } from './domain/lattice'
-import { layoutNatural3d } from './domain/layout'
 import { compareLattices } from './domain/relations'
+import { layoutLattice3d } from './domain/spatial-layout'
 import { AXIS_COLORS, LatticeScene } from './scene/lattice-scene'
 import { SceneBoundary } from './scene/scene-boundary'
 import {
@@ -24,7 +24,7 @@ import {
 } from './session/held-forms'
 
 const INITIAL_LATTICE = buildDivisorLattice(348)
-const SPECIMENS = [348, 60, 72, 64] as const
+const SPECIMENS = [348, 60, 72, 64, 210] as const
 
 function signatureText(lattice: DivisorLattice): string {
   return lattice.signature.length === 0 ? '(point)' : `(${lattice.signature.join(', ')})`
@@ -63,7 +63,12 @@ export function App() {
   const [inspectedHeldValue, setInspectedHeldValue] = useState<number | null>(null)
   const [cabinetMessage, setCabinetMessage] = useState<string | null>(null)
 
-  const layout = useMemo(() => layoutNatural3d(lattice), [lattice])
+  const layout = useMemo(() => layoutLattice3d(lattice), [lattice])
+  const projected = layout.kind === 'ranked-zonotopal'
+  const coincidentShadowCount = layout.coincidentNodeGroups.length
+  const fieldKind = projected
+    ? `ranked zonotopal projection · ${layout.sourceDimensions}→${layout.targetDimensions} · ${coincidentShadowCount} coincident ${coincidentShadowCount === 1 ? 'shadow' : 'shadows'}`
+    : 'natural exponent space'
   const heldEntries = useMemo<readonly HeldFormEntry[]>(
     () => heldEntriesFor(lattice, heldValues),
     [heldValues, lattice],
@@ -94,7 +99,6 @@ export function App() {
     try {
       const value = parsePositiveInteger(raw)
       const nextLattice = buildDivisorLattice(value)
-      assertNaturalDimension(nextLattice)
       setLattice(nextLattice)
       setInspectedHeldValue((currentInspection) =>
         chooseCabinetFront(
@@ -195,11 +199,18 @@ export function App() {
             <button type="submit">unfold</button>
           </div>
           <p id="input-boundary" className="microcopy">
-            exact natural geometry · up to three prime directions
+            natural through three directions · ranked shadow thereafter
           </p>
           <p className={`input-message${error ? ' is-error' : ''}`} aria-live="polite">
             {error ?? `showing the divisor lattice of ${lattice.n.toLocaleString('en-US')}`}
           </p>
+          {projected && (
+            <p className="projection-note" role="note">
+              <b>{layout.sourceDimensions}→{layout.targetDimensions} projection</b>
+              <span>graph · rank · complements exact</span>
+              <span>higher incidence cast · {coincidentShadowCount} coincident {coincidentShadowCount === 1 ? 'shadow' : 'shadows'}</span>
+            </p>
+          )}
         </form>
 
         <div className="specimen-row" aria-label="example integers">
@@ -263,7 +274,7 @@ export function App() {
           ) : (
             <ol className="axis-list">
               {lattice.factors.map((factor, axis) => (
-                <li key={factor.prime} style={{ '--axis-color': AXIS_COLORS[axis] } as React.CSSProperties}>
+                <li key={factor.prime} style={{ '--axis-color': AXIS_COLORS[axis % AXIS_COLORS.length] } as React.CSSProperties}>
                   <span className="axis-swatch" aria-hidden="true" />
                   <span>p{axis + 1}</span>
                   <strong>{factor.prime}</strong>
@@ -281,13 +292,16 @@ export function App() {
         </footer>
       </section>
 
-      <section className="field" aria-label={`three-dimensional divisor lattice for ${lattice.n}`}>
+      <section
+        className={`field${projected ? ' is-projected' : ''}`}
+        aria-label={`${projected ? 'three-dimensional ranked zonotopal projection' : 'three-dimensional divisor lattice'} for ${lattice.n}`}
+      >
         <div className="field-rule field-rule-top" aria-hidden="true" />
         <div className="field-rule field-rule-side" aria-hidden="true" />
         <div className="field-header">
           <div>
             <span className="field-index">n / {lattice.n}</span>
-            <span className="field-kind">natural exponent space</span>
+            <span className="field-kind">{fieldKind}</span>
           </div>
           <button
             type="button"
@@ -303,6 +317,19 @@ export function App() {
           <div className="corner corner-ne" aria-hidden="true" />
           <div className="corner corner-sw" aria-hidden="true" />
           <div className="corner corner-se" aria-hidden="true" />
+          {projected && (
+            <aside className="projection-warrant" aria-label="projection warrant">
+              <div>
+                <span>projection warrant</span>
+                <strong>{layout.sourceDimensions}→{layout.targetDimensions}</strong>
+              </div>
+              <p><b>exact</b> graph · rank · complements</p>
+              <p><b>cast</b> higher-dimensional incidence</p>
+              <small>
+                {coincidentShadowCount} coincident {coincidentShadowCount === 1 ? 'shadow' : 'shadows'}
+              </small>
+            </aside>
+          )}
           <SceneBoundary>
             <LatticeScene
               layout={layout}

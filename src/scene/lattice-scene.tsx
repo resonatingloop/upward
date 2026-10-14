@@ -3,12 +3,23 @@ import { Canvas, type ThreeEvent, useThree } from '@react-three/fiber'
 import { useEffect, useState } from 'react'
 import { PerspectiveCamera } from 'three'
 
-import type { PositionedDivisorNode, NaturalLayout } from '../domain/layout'
+import type { PositionedDivisorNode } from '../domain/layout'
+import type { SpatialLayout } from '../domain/spatial-layout'
 
-export const AXIS_COLORS = ['#78dfca', '#dca16c', '#a995d9'] as const
+export const AXIS_COLORS = [
+  '#78dfca',
+  '#dca16c',
+  '#a995d9',
+  '#df8299',
+  '#7aa9dc',
+  '#c2ce72',
+  '#e0c76f',
+  '#68b9cf',
+  '#cf8fc8',
+] as const
 
 interface LatticeSceneProps {
-  layout: NaturalLayout
+  layout: SpatialLayout
   selectedId: string | null
   complementId: string | null
   embeddedNodeIds: ReadonlySet<string>
@@ -172,7 +183,7 @@ export function LatticeScene({
           <Line
             key={edge.id}
             points={[source.position, target.position]}
-            color={embedded ? '#e7c487' : AXIS_COLORS[edge.axis]}
+            color={embedded ? '#e7c487' : AXIS_COLORS[edge.axis % AXIS_COLORS.length]}
             lineWidth={related ? 2.25 : embedded ? 1.9 : 1.05}
             transparent
             opacity={related ? 0.9 : embedded ? 0.78 : 0.27}

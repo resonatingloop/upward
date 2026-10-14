@@ -1,7 +1,4 @@
-import type { DivisorLattice } from './lattice'
-
 export const MAX_INPUT = 1_000_000_000
-export const MAX_NATURAL_DIMENSIONS = 3
 
 export class InputBoundaryError extends Error {
   constructor(message: string) {
@@ -30,16 +27,5 @@ export function parsePositiveInteger(raw: string): number {
   }
 
   return value
-}
-
-export function assertNaturalDimension(lattice: DivisorLattice): void {
-  if (lattice.factors.length <= MAX_NATURAL_DIMENSIONS) {
-    return
-  }
-
-  throw new InputBoundaryError(
-    `${lattice.n.toLocaleString('en-US')} opens ${lattice.factors.length} prime directions. ` +
-      'higher-dimensional projection is not part of this first slice yet.',
-  )
 }
 

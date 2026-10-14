@@ -2,7 +2,7 @@
 
 > **continuity role:** historical rationale and supersession
 > **status:** append-only
-> **last verified:** 2026-10-13
+> **last verified:** 2026-10-14
 > **owns:** consequential choices another maintainer should not have to re-derive
 > **update when:** a decision introduces, clarifies, or supersedes a durable fact
 
@@ -237,4 +237,59 @@ evidence:
 
 - focused front-selection tests and rendered desktop, narrow, keyboard,
   reduced-motion, and no-webgl acceptance named by the related spec.
+
+## d-007 — higher dimensions enter through a ranked zonotopal shadow
+
+- date: 2026-10-14
+- status: accepted
+- supersedes: d-003's temporary refusal of four-plus-prime inputs; retains its
+  requirement to name information loss
+- related spec: `specs/004-ranked-zonotopal-projection.md`
+
+context:
+
+the dimension-independent lattice model can describe integers such as
+`210 = 2 × 3 × 5 × 7`, but its natural exponent body occupies four dimensions.
+the initial refusal protected mathematical honesty while leaving a deliberate
+door for a separately named projection.
+
+decision:
+
+retain exact natural coordinates through three prime directions. for four or
+more, center every exponent vector and map each canonically ordered prime axis
+to an equal-length three-dimensional generator. every generator receives one
+common positive world-height component and a golden-angle horizontal bearing.
+call the result a **ranked zonotopal projection** and disclose its source-to-
+target dimension plus coincident-shadow count in the interface.
+
+canonical generator order is descending maximum exponent, then ascending prime
+for ties. prime labels still own their exact edges and colors; prime magnitude
+does not weight spatial length.
+
+alternatives considered:
+
+- evenly spaced horizontal bearings, which create forced opposing-axis
+  cancellations and visually guaranteed coincidences;
+- a generic force layout, which would sever geometry from exponent structure;
+- continuing to refuse all higher-dimensional inputs, which preserves honesty
+  but leaves the already dimension-independent domain model underused;
+- user-editable projectors in the first transition, which would conflate one
+  deterministic instrument with a projection laboratory.
+
+consequences:
+
+- cover identity remains exact, every cover has equal length and equal positive
+  rank rise, and complements remain antipodal;
+- higher-dimensional distance, angle, face incidence, enclosure, and
+  injectivity are not claimed;
+- projected coincidences are computed and disclosed rather than hidden;
+- projected integers use the unchanged integer-only session schema;
+- `210` becomes the first public projected specimen while lower-dimensional
+  coordinates remain unchanged.
+
+evidence:
+
+- `geo-002` and `geo-003` in `CONTRACTS.md`, focused projection tests, and the
+  desktop, narrow, session-reload, complement, fish-face, and no-webgl browser
+  acceptance named by the related spec.
 

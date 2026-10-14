@@ -103,6 +103,7 @@ input:focus-visible,
   min-width: 0;
   padding: clamp(1.25rem, 2.6vw, 2.25rem);
   overflow-y: auto;
+  overflow-x: hidden;
   border-right: 1px solid var(--line);
   background:
     linear-gradient(140deg, rgba(255, 255, 255, 0.025), transparent 28%),
@@ -256,15 +257,38 @@ h1 {
   color: var(--danger);
 }
 
+.projection-note {
+  display: none;
+  margin: 0.2rem 0 0;
+  padding: 0.55rem 0.65rem;
+  color: #71807b;
+  border-left: 1px solid rgba(169, 149, 217, 0.46);
+  background: linear-gradient(90deg, rgba(169, 149, 217, 0.07), transparent);
+  font-size: 0.52rem;
+  line-height: 1.5;
+}
+
+.projection-note b,
+.projection-note span {
+  display: block;
+}
+
+.projection-note b {
+  color: #b7a5df;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .specimen-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto repeat(5, minmax(0, 1fr));
   align-items: center;
   gap: 0.4rem;
   min-width: 0;
 }
 
 .specimen-row > span {
-  margin-right: auto;
   color: #596461;
   font-size: 0.58rem;
   letter-spacing: 0.15em;
@@ -272,7 +296,7 @@ h1 {
 }
 
 .specimen-row button {
-  min-width: 2.6rem;
+  min-width: 0;
   min-height: 2rem;
   padding: 0.35rem 0.48rem;
   color: #77827f;
@@ -874,6 +898,15 @@ h1 {
   background-size: 4rem 4rem;
 }
 
+.field.is-projected {
+  background:
+    radial-gradient(circle at 72% 28%, rgba(169, 149, 217, 0.07), transparent 28%),
+    radial-gradient(circle at 36% 68%, rgba(220, 161, 108, 0.055), transparent 34%),
+    linear-gradient(rgba(109, 133, 126, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(109, 133, 126, 0.035) 1px, transparent 1px);
+  background-size: auto, auto, 4rem 4rem, 4rem 4rem;
+}
+
 .field::before {
   position: absolute;
   inset: 0;
@@ -894,6 +927,18 @@ h1 {
   right: 2.5rem;
   left: 2.5rem;
   height: 1px;
+}
+
+.is-projected .field-rule-top {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(120, 223, 202, 0.62),
+    rgba(220, 161, 108, 0.54),
+    rgba(169, 149, 217, 0.56),
+    rgba(223, 130, 153, 0.48),
+    transparent
+  );
 }
 
 .field-rule-side {
@@ -948,6 +993,78 @@ h1 {
 
 .scene-frame canvas {
   touch-action: none;
+}
+
+.projection-warrant {
+  position: absolute;
+  z-index: 5;
+  top: 1.25rem;
+  left: 1.25rem;
+  width: min(16rem, calc(100% - 2.5rem));
+  padding: 0.7rem 0.8rem 0.75rem;
+  pointer-events: none;
+  color: #71807b;
+  border: 1px solid rgba(169, 149, 217, 0.24);
+  background:
+    linear-gradient(135deg, rgba(169, 149, 217, 0.07), transparent 54%),
+    rgba(8, 12, 13, 0.72);
+  box-shadow:
+    inset 0 0 1.5rem rgba(169, 149, 217, 0.035),
+    0 0.8rem 2.4rem rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+.projection-warrant::before {
+  position: absolute;
+  top: -1px;
+  right: 10%;
+  left: 10%;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, var(--violet), transparent);
+  box-shadow: 0 0 12px rgba(169, 149, 217, 0.44);
+}
+
+.projection-warrant > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.55rem;
+}
+
+.projection-warrant span,
+.projection-warrant small {
+  font-size: 0.48rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.projection-warrant strong {
+  color: #b7a5df;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+}
+
+.projection-warrant p {
+  margin: 0.18rem 0;
+  font-size: 0.53rem;
+  letter-spacing: 0.045em;
+  line-height: 1.4;
+}
+
+.projection-warrant p b {
+  color: #aebbb6;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.projection-warrant small {
+  display: block;
+  margin-top: 0.55rem;
+  color: #665f79;
 }
 
 .scene-fallback {
@@ -1303,6 +1420,14 @@ h1 {
 
   .field-kind {
     display: none;
+  }
+
+  .projection-warrant {
+    display: none;
+  }
+
+  .projection-note {
+    display: block;
   }
 
   .axis-card,

@@ -2,7 +2,7 @@
 
 > **continuity role:** operational procedure
 > **status:** current
-> **last verified:** 2026-10-13
+> **last verified:** 2026-10-14
 > **owns:** exact setup, run, test, configuration, data, and recovery procedures
 > **update when:** any procedure or required environment changes
 
@@ -91,12 +91,19 @@ rendered acceptance:
    session payload;
 10. inspect held `306`, unfold `348`, and confirm its front card reports
    `same body` with structural signature `(2, 1, 1)`;
-11. try `210`; confirm a four-direction error while `348` remains visible;
-12. repeat near 430 pixels wide; confirm no horizontal overflow and that the
-    cabinet opens as a two-column bottom sheet;
-13. emulate reduced motion and confirm the drawer opens without travel;
-14. disable webgl and confirm the scene failure is named while the relationship
-    readout and emphasized divisor-rail values remain present.
+11. unfold `210`; confirm a named `4→3` ranked zonotopal projection with 16
+    nodes, 32 covers, four labeled prime directions, and a visible information-
+    loss warrant;
+12. select `105`, cross to complement `2`, hold `210`, reload, and confirm the
+    integer returns in the unchanged v1 session payload;
+13. return to `348`; confirm the field returns to `natural exponent space` and
+    the projection warrant disappears;
+14. repeat near 430 pixels wide; confirm no horizontal overflow and that the
+    compact projection note remains visible while the cabinet opens as a two-
+    column bottom sheet;
+15. emulate reduced motion and confirm the drawer opens without travel;
+16. disable webgl and confirm the scene failure is named while the projection
+    note, relationship readout, and divisor-rail values remain present.
 
 ## configuration and precedence
 

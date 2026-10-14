@@ -2,7 +2,7 @@
 
 > **continuity role:** implemented system model
 > **status:** current
-> **last verified:** 2026-10-13
+> **last verified:** 2026-10-14
 > **owns:** components, boundaries, data flow, and important seams that exist now
 > **update when:** structural implementation changes
 
@@ -16,7 +16,9 @@ integer-only session cabinet.
 decimal input
   -> strict input boundary
   -> pure divisor-lattice model
-  -> exact natural 3d layout
+  -> spatial layout dispatch
+       -> exact natural 3d layout (0–3 prime directions)
+       -> ranked zonotopal projection (4+ prime directions)
   -> react application state
        -> webgl scene
        -> accessible dom readout and divisor rail
@@ -36,10 +38,12 @@ held integer session payload
 
 | component | path | responsibility | public seam |
 |---|---|---|---|
-| input boundary | `src/domain/input.ts` | decimal parsing, magnitude bound, exact-dimension boundary | `parsePositiveInteger`, `assertNaturalDimension` |
+| input boundary | `src/domain/input.ts` | decimal parsing and magnitude bound | `parsePositiveInteger` |
 | lattice model | `src/domain/lattice.ts` | factors, divisors, signatures, complements, and cover edges | `buildDivisorLattice` |
 | relationship model | `src/domain/relations.ts` | identity, structural twins, oriented divisibility, prime extrusion, and embedded ids | `compareLattices` |
 | natural layout | `src/domain/layout.ts` | centered equal-step coordinates and camera extent | `layoutNatural3d` |
+| projected layout | `src/domain/projection.ts` | ranked generators, centered projected coordinates, camera extent, and coincidence groups | `layoutRankedZonotopal3d` |
+| spatial dispatch | `src/domain/spatial-layout.ts` | select exact natural or named projected geometry | `layoutLattice3d` |
 | session adapter | `src/session/held-forms.ts` | schema validation, cap, deduplication, storage reads/writes, and failure isolation | `readHeldForms`, `writeHeldForms` |
 | application | `src/app.tsx` | current valid lattice, held integers, inspected relation, input failure, and selection | `App` |
 | cabinet view model | `src/cabinet/cabinet-view.ts` | answer-set discovery and deterministic front-card selection without changing held order | `chooseCabinetFront`, `answeringForms` |
@@ -53,14 +57,16 @@ held integer session payload
 1. the form passes a string to `parsePositiveInteger`.
 2. `buildDivisorLattice` factorizes the integer and creates all nodes and exact
    covers without importing react or three.js.
-3. `assertNaturalDimension` refuses four or more prime directions for this slice.
-4. `layoutNatural3d` centers each exponent axis. complementary divisors become
-   spatial opposites.
+3. `layoutLattice3d` retains exact natural coordinates for zero through three
+   prime directions and selects the named ranked zonotopal projection thereafter.
+4. both layouts center exponent axes, so complementary divisors become spatial
+   opposites. the projected layout additionally preserves equal cover length and
+   equal positive world-height rise while reporting coincident node centers.
 5. only after every step succeeds does `App` replace the last valid lattice.
 6. the scene consumes positions and edges; the dom consumes the same lattice for
    input status, details, and keyboard selection.
-7. session restoration validates each held integer through the same input,
-   divisor-count, and natural-dimension boundaries, then reconstructs its lattice.
+7. session restoration validates each held integer through the same input and
+   divisor-count boundaries, then reconstructs its lattice and spatial layout.
 8. `compareLattices` compares each held lattice to the active lattice. after a
    successful unfold, the current answering inspection remains in front or the
    first answer in stable insertion order comes forward. this derived view does
@@ -104,6 +110,6 @@ api. `sessionStorage` is the only runtime browser-state boundary.
 - three.js and its react renderer produce a first-slice bundle of about 326 kb
   gzipped; code splitting is not yet useful because the scene is the primary use;
 - dom labels remain readable but may occlude one another at some orientations;
-- high-dimensional projection must preserve prime-direction meaning without
-  claiming lost geometry is exact.
+- the ranked projection reports exact center coincidences but does not yet offer
+  exploded views or screen-space label decluttering;
 

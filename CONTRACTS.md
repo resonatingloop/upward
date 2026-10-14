@@ -2,7 +2,7 @@
 
 > **continuity role:** normative invariants
 > **status:** current
-> **last verified:** 2026-10-13
+> **last verified:** 2026-10-14
 > **owns:** confirmed promises implementation must not drift from casually
 > **update when:** an authorized decision changes an invariant or its proof
 
@@ -16,6 +16,7 @@ not, by itself, authorization to weaken the contract.
 | factorization and lattice structure | `src/domain/lattice.ts` | `src/domain/lattice.test.ts` |
 | relationships and embedded lattice facts | `src/domain/relations.ts` | `src/domain/relations.test.ts` |
 | natural three-dimensional position | `src/domain/layout.ts` | `src/domain/layout.test.ts` |
+| ranked higher-dimensional projection | `src/domain/projection.ts`, `src/domain/spatial-layout.ts` | `src/domain/projection.test.ts` |
 | held-form session schema | `src/session/held-forms.ts` | `src/session/held-forms.test.ts` |
 | scene, cabinet, and visible details | `src/app.tsx`, `src/cabinet/cabinet-view.ts`, `src/cabinet/held-form-cabinet.tsx`, `src/scene/lattice-scene.tsx` | focused cabinet tests, production build, and browser smoke |
 | supported input boundary | `src/domain/input.ts` | `src/domain/input.test.ts` |
@@ -33,7 +34,8 @@ not, by itself, authorization to weaken the contract.
 | `relation-001` | a prime extrusion exists exactly when the smaller integer divides the larger, the quotient is prime, and that prime does not divide the smaller integer. | relationship model | relationship classifier tests |
 | `relation-002` | when a held integer divides the current integer, its embedded node set contains exactly the current divisors of the held integer and its embedded edge set contains exactly the covers internal to that set. | relationship model | fish-face and axis-extension tests |
 | `geo-001` | one to three prime directions use centered, equal-step natural exponent coordinates. | natural layout | layout tests |
-| `geo-002` | four or more prime directions are reported as unsupported until a named projection is accepted. | natural layout and ui | error-state tests and browser smoke |
+| `geo-002` | four or more prime directions use the named deterministic ranked zonotopal projection: exact covers retain equal length and positive equal world-height rise, complements remain antipodal, and higher-dimensional incidence is explicitly reported as projected. | projected layout and ui | projection tests and 210 browser smoke |
+| `geo-003` | projected node-center coincidences are domain metadata and their group count is disclosed in the interface; the projection never presents itself as injective without proof. | projected layout and ui | coincidence tests, visible warrant, and browser smoke |
 | `state-001` | held forms persist only as a versioned, bounded, validated list of integers in `sessionStorage`; unavailable or malformed storage leaves a working memory-only cabinet. | session adapter | schema, cap, and failure tests plus reload smoke |
 | `boundary-001` | superseded by `boundary-002`; the retired first slice performed no runtime network request and persisted no user state. | historical first-slice boundary | retired spec and supersession record |
 | `boundary-002` | the application makes no required runtime network request; browser persistence is limited to the integer-only held-form session schema. | application and session boundary | source review, payload inspection, and browser network review |
@@ -69,14 +71,14 @@ the sole browser-persisted schema uses key `upward:held-forms:v1` and payload:
 ```
 
 `values` contains at most 12 unique integers in stable insertion order. every
-value must remain unfoldable under the current magnitude, divisor-count, and
-natural-dimension boundaries. factorization, signatures, relations, embedded
-ids, geometry, selection, and interface state are recomputed and never stored.
+value must remain unfoldable under the current magnitude and divisor-count
+boundaries. factorization, signatures, relations, embedded ids, geometry,
+selection, and interface state are recomputed and never stored.
 
 ## lifecycle and failure semantics
 
-invalid, oversized, or currently unsupported inputs produce an inline error and
-leave the last valid lattice intact. renderer failure must not be represented as
+invalid, oversized, or over-budget inputs produce an inline error and leave the
+last valid lattice intact. renderer failure must not be represented as
 mathematical success. invalid or unavailable session storage must not prevent
 the default lattice or a memory-only cabinet from working.
 
@@ -111,7 +113,8 @@ production preview smoke at `/upward/`
 
 ## intentionally unspecified
 
-- the eventual high-dimensional projection;
+- editable projection vectors, alternate projection presets, and exploded
+  coincident-shadow views;
 - lattice morphing and comparisons among every pair of held forms;
 - the neutral export format and any downstream adapter;
 - custom domain and release cadence.

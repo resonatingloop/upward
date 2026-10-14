@@ -33,7 +33,7 @@ describe('held-form session schema', () => {
           values: [153, '306', 210, 348, 153, 0, 1_000_000_001],
         }),
       ),
-    ).toEqual([153, 348])
+    ).toEqual([153, 210, 348])
   })
 
   it('ignores malformed and wrong-version payloads', () => {

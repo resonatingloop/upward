@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { assertNaturalDimension, MAX_INPUT, parsePositiveInteger } from './input'
-import { buildDivisorLattice } from './lattice'
+import { MAX_INPUT, parsePositiveInteger } from './input'
 
 describe('parsePositiveInteger', () => {
   it('accepts a bounded decimal integer', () => {
@@ -14,18 +13,6 @@ describe('parsePositiveInteger', () => {
 
   it('rejects values above the first-slice bound', () => {
     expect(() => parsePositiveInteger(String(MAX_INPUT + 1))).toThrow(/bounded/)
-  })
-})
-
-describe('assertNaturalDimension', () => {
-  it('accepts up to three distinct prime directions', () => {
-    expect(() => assertNaturalDimension(buildDivisorLattice(348))).not.toThrow()
-  })
-
-  it('names the unsupported higher-dimensional boundary', () => {
-    expect(() => assertNaturalDimension(buildDivisorLattice(210))).toThrow(
-      /4 prime directions/,
-    )
   })
 })
 
