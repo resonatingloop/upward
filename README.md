@@ -1,6 +1,7 @@
 # upward 🪩
 
 upward is an interactive instrument for exploring the hidden structure of integers.
+
 It turns numbers into navigable divisor bodies: exact lattices when the structure fits natural exponent space, and ranked zonotopal projections when the form exceeds three prime directions.
 
 Or, less formally:
@@ -22,9 +23,7 @@ The result is part mathematical instrument, part curiosity cabinet: a way to see
 > **owns:** the shortest successful use and the map to deeper documentation
 > **update when:** installation, primary use, maturity, or document authority changes
 
-upward is a public, client-only instrument for encountering the multiplicative
-architecture of a positive integer as an interactive three-dimensional divisor
-lattice.
+---
 
 ## current state
 
